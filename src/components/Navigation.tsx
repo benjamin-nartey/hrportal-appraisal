@@ -1,24 +1,26 @@
 "use client";
+
 import { Fragment, useState } from "react";
 import Sidebar from "./Sidabar";
 import { AiFillCloseCircle, AiOutlinePoweroff } from "react-icons/ai";
-import { HiArrowLeft, HiMenu } from "react-icons/hi";
+import { HiMenu } from "react-icons/hi";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-import { useRouter } from "next/navigation";
 import { getRandomColor } from "@/lib/getRandomColor";
 import { getContrastingColor } from "@/lib/getContrastingColor";
-import { FaClock } from "react-icons/fa";
+import { usePathname } from "next/navigation";
 
 export default function Navigation({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const router = useRouter();
   const [toggleSidebar, setToggleSidebar] = useState(false);
   const [toggleLogout, setToggleLogout] = useState(false);
   const [avatarBackground] = useState(getRandomColor());
   const [avatarText] = useState(getContrastingColor(avatarBackground));
+
+  const Pathname = usePathname();
+
   return (
     <Fragment>
       <div className="absolute right-8 top-16 z-[99]">
@@ -29,24 +31,22 @@ export default function Navigation({
         )}
       </div>
       <div className="flex lg:flex-row bg-[#f4e7ed] flex-col min-h-screen transition-height duration-75 ease-out overflow-hidden">
-        <div className="lg:flex flex-initial h-screen hidden">
+        <div className="lg:flex flex-initial h-screen hidden bg-clip-padding backdrop-filter backdrop-blur-md bg-primary">
           <Sidebar />
         </div>
         <div className="main-content-column bg-[#eaf0fd] h-screen w-full overflow-y-auto overflow-x-hidden">
-          <div className="flex w-full justify-between items-center sticky top-0 z-10 bg-[#2797aa] text-white">
+          <div className="flex w-full justify-between items-center sticky top-0 z-10 bg-primary text-white">
             <div className="w-full relative h-full p-5">
               <div className="w-full flex justify-between items-center">
-                <button
-                  type="button"
-                  className="flex items-center gap-2 cursor-pointer hover:bg-white hover:text-[#2797aa] text-white/75 p-2 rounded"
-                >
-                  <FaClock className="cursor-pointer text-inherit " />
-                  <span className="text-inherit">Set Appraisal Timeline</span>
-                </button>
+                <div className=" text-white p-2">
+                  <span className="text-inherit capitalize">
+                    {Pathname.replace(/\//g, "").replace(/-/g, " ")}
+                  </span>
+                </div>
 
                 <HiMenu
                   onClick={() => setToggleSidebar(true)}
-                  className="text-[25px] text-[#0E1B39] cursor-pointer lg:hidden block"
+                  className="text-[25px] text-white cursor-pointer lg:hidden block"
                 />
 
                 <div className="lg:block hidden">
@@ -77,14 +77,14 @@ export default function Navigation({
               </div>
             </div>
           </div>
-          <div className="w-full p-6 min-h-screen">{children}</div>
+          <div className="w-full p-6 min-h-screen bg-white">{children}</div>
         </div>
         {toggleSidebar && (
-          <div className="fixed w-4/5 bg-white h-screen overflow-y-auto shadow-md z-10 animate-slide-in">
+          <div className="fixed w-4/5 bg-primary h-screen overflow-y-auto shadow-md z-10 animate-slide-in">
             <div className="absolute w-full flex justify-end items-center p-2 z-20">
               <AiFillCloseCircle
                 fontSize={30}
-                className="cursor-pointer text-[#e2d5d5] "
+                className="cursor-pointer text-white "
                 onClick={() => setToggleSidebar(false)}
               />
             </div>

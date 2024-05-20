@@ -7,6 +7,7 @@ import { useState } from "react";
 import { FaAddressCard, FaCommentDots } from "react-icons/fa";
 import { FaCircleExclamation } from "react-icons/fa6";
 import { HiDocumentReport } from "react-icons/hi";
+import { IoSettings } from "react-icons/io5";
 import {
   MdDashboard,
   MdEmail,
@@ -27,10 +28,10 @@ const Sidebar: React.FC<SidebarProps> = ({ closeToggle }) => {
   };
 
   const isNotActiveStyle =
-    "px-5 py-2 flex items-center text-white gap-3 w-full hover:bg-teal-400/20 hover:text-[#fff] hover:font-semibold transition-all duration-200 ease-in-out capitalize";
+    "px-5 py-2 flex items-center text-white gap-3 w-full hover:bg-[#b430bb] hover:text-black hover:font-semibold transition-all duration-200 ease-in-out capitalize";
 
   const isActiveStyle =
-    "px-5 py-2 flex items-center text-[#fff] gap-3 bg-teal-400/60 font-bold w-full transition-all duration-200 ease-in-out capitalize";
+    "px-5 py-2 flex items-center text-black gap-3 bg-[#D09EE8] font-bold w-full transition-all duration-200 ease-in-out capitalize";
 
   //   const isNotActiveStyle: React.CSSProperties = {
   //     padding: "0.5rem 1rem",
@@ -60,14 +61,14 @@ const Sidebar: React.FC<SidebarProps> = ({ closeToggle }) => {
     <div
       style={{
         minWidth: "220px",
-        backgroundImage: "url(/cocoa.jpg)",
+        // backgroundImage: "url(/cocoa.jpg)",
         backgroundSize: "cover",
         backgroundPosition: "center center",
       }}
       className="flex flex-col justify-start h-full overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']"
     >
-      <div className="flex flex-col start gap-8 pb-4 h-full bg-[#2797aa] bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30">
-        <div className="w-full sticky top-0 z-10 border-b border-solid border-gray-200 py-[1.1rem] px-5">
+      <div className=" flex flex-col start gap-8 pb-4 h-full bg-clip-padding backdrop-filter lg:backdrop-filter-none backdrop-blur-md lg:backdrop-blur-none bg-primary lg:bg-transparent ">
+        <div className="w-full bg-primary sticky top-0 z-10 border-b border-solid border-gray-200 py-[1.1rem] px-5">
           <div className=" logo-box flex justify-start items-center gap-2 ">
             <Image
               width={45}
@@ -100,7 +101,7 @@ const Sidebar: React.FC<SidebarProps> = ({ closeToggle }) => {
           </Link>
 
           <Link
-            href="/profile"
+            href="/user-profile"
             className={
               activeLink === "profile" ? isActiveStyle : isNotActiveStyle
             }
@@ -128,7 +129,7 @@ const Sidebar: React.FC<SidebarProps> = ({ closeToggle }) => {
           </Link>
 
           <Link
-            href="/policy"
+            href="/policy-guidelines"
             className={
               activeLink === "policy" ? isActiveStyle : isNotActiveStyle
             }
@@ -194,6 +195,7 @@ const Sidebar: React.FC<SidebarProps> = ({ closeToggle }) => {
             <MdEmail size={20} />
             Send Email Alerts
           </Link>
+
           <Link
             href="/summary-reports"
             className={
@@ -208,6 +210,22 @@ const Sidebar: React.FC<SidebarProps> = ({ closeToggle }) => {
           >
             <MdSummarize size={20} />
             Summary Reports
+          </Link>
+
+          <Link
+            href="/configurations"
+            className={
+              activeLink === "summary-reports"
+                ? isActiveStyle
+                : isNotActiveStyle
+            }
+            onClick={() => {
+              setActiveLink("summary-reports");
+              handleCloseSidebar();
+            }}
+          >
+            <IoSettings size={20} />
+            Configurations
           </Link>
         </nav>
       </div>

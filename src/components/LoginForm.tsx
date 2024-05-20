@@ -36,7 +36,7 @@ export default function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
       <input
-        className="p-2 outline-none w-full border border-solid border-gray-300"
+        className="p-2 outline-none w-full border border-solid border-gray-300 focus:border-secondary"
         type="email"
         name="email"
         id="email"
@@ -44,7 +44,7 @@ export default function LoginForm() {
         required
       />
       <input
-        className="p-2 outline-none w-full border border-solid border-gray-300"
+        className="p-2 outline-none w-full border border-solid border-gray-300 focus:border-secondary"
         type="password"
         name="password"
         id="password"
@@ -55,7 +55,7 @@ export default function LoginForm() {
         <span className="text-red-500 text-sm">{errorMessage}</span>
       )}
       <button
-        className="bg-[#275254] hover:bg-teal-400 transition-all active:bg-[#275254] text-white p-2"
+        className="bg-secondary hover:bg-primary hover:text-white transition-all active:bg-secondary text-black p-2"
         type="submit"
       >
         Login
