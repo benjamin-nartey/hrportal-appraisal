@@ -1,6 +1,6 @@
 export default function page() {
   return (
-    <div className="lg:px-6 lg:py-8 p-2 ">
+    <div className="lg:px-6 lg:py-12 p-2 ">
       <div className="flex flex-wrap -m-4 text-center">
         <div className="p-4 md:w-1/4 sm:w-1/2 w-full">
           <div className=" bg-white border-l-[5px] shadow border-l-primary cursor-pointer px-4 py-6 rounded-lg transform transition duration-500 hover:scale-110">
