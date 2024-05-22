@@ -68,7 +68,7 @@ const Sidebar: React.FC<SidebarProps> = ({ closeToggle }) => {
       className="flex flex-col justify-start h-full overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']"
     >
       <div className=" flex flex-col start gap-8 pb-4 h-full bg-clip-padding backdrop-filter lg:backdrop-filter-none backdrop-blur-md lg:backdrop-blur-none bg-primary lg:bg-transparent ">
-        <div className="w-full bg-primary sticky top-0 z-10 border-b border-solid border-gray-200 py-[1.1rem] px-5">
+        <div className="w-full bg-primary sticky top-0 z-10 py-[1.1rem] px-5">
           <div className=" logo-box flex justify-start items-center gap-2 ">
             <Image
               width={45}

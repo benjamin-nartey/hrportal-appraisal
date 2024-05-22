@@ -55,7 +55,7 @@ export default function LoginForm() {
         <span className="text-red-500 text-sm">{errorMessage}</span>
       )}
       <button
-        className="bg-secondary hover:bg-primary hover:text-white transition-all active:bg-secondary text-black p-2"
+        className="bg-secondary font-semibold hover:bg-primary hover:text-white transition-all active:bg-secondary text-black p-2"
         type="submit"
       >
         Login

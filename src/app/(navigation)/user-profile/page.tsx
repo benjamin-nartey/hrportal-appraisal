@@ -1,3 +1,9 @@
+import ProfileCard from "@/components/ProfileCard";
+
 export default function page() {
-  return <div>Profile</div>;
+  return (
+    <div className=" flex justify-start items-center ">
+      <ProfileCard />
+    </div>
+  );
 }

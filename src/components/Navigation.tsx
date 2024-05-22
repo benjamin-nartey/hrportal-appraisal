@@ -35,7 +35,7 @@ export default function Navigation({
           <Sidebar />
         </div>
         <div className="main-content-column bg-[#eaf0fd] h-screen w-full overflow-y-auto overflow-x-hidden">
-          <div className="flex w-full justify-between items-center sticky top-0 z-10 bg-primary text-white">
+          <div className="flex border-l-0 lg:border-l border-l-gray-300 w-full justify-between items-center sticky top-0 z-10 bg-primary text-white">
             <div className="w-full relative h-full p-5">
               <div className="w-full flex justify-between items-center">
                 <div className=" text-white p-2">
@@ -77,7 +77,14 @@ export default function Navigation({
               </div>
             </div>
           </div>
-          <div className="w-full p-6 min-h-screen bg-white">{children}</div>
+          <div className="w-full min-h-screen bg-white ">{children}</div>
+          <footer className="w-full bg-secondary text-white font-mono flex justify-center items center p-1 ">
+            <div className="w-full h-full bg-primary p-6">
+              {` © ${new Date(
+                Date.now()
+              ).getFullYear()} Information Technology Department (ITD)`}
+            </div>
+          </footer>
         </div>
         {toggleSidebar && (
           <div className="fixed w-4/5 bg-primary h-screen overflow-y-auto shadow-md z-10 animate-slide-in">

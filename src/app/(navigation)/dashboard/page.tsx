@@ -1,6 +1,6 @@
 export default function page() {
   return (
-    <div>
+    <div className="px-8 py-10">
       <div className="flex flex-wrap -m-4 text-center">
         <div className="p-4 md:w-1/4 sm:w-1/2 w-full">
           <div className=" bg-white border-l-[5px] shadow border-l-primary cursor-pointer px-4 py-6 rounded-lg transform transition duration-500 hover:scale-110">
@@ -26,10 +26,10 @@ export default function page() {
                 ></path>
               </g>
             </svg>
-            <h2 className="title-font font-medium text-3xl text-gray-900">
+            <h2 className="title-font font-semibold text-3xl text-gray-900">
               2.7K
             </h2>
-            <p className="leading-relaxed">Self Appraisal</p>
+            <p className="leading-relaxed font-medium">Self Appraisal</p>
           </div>
         </div>
         <div className="p-4 md:w-1/4 sm:w-1/2 w-full">
@@ -61,10 +61,10 @@ export default function page() {
                 ></path>
               </g>
             </svg>
-            <h2 className="title-font font-medium text-3xl text-gray-900">
+            <h2 className="title-font font-semibold text-3xl text-gray-900">
               1.3K
             </h2>
-            <p className="leading-relaxed">Completed Appraisals</p>
+            <p className="leading-relaxed font-medium">Completed Appraisals</p>
           </div>
         </div>
         <div className="p-4 md:w-1/4 sm:w-1/2 w-full">
@@ -96,10 +96,10 @@ export default function page() {
                 ></path>
               </g>
             </svg>
-            <h2 className="title-font font-medium text-3xl text-gray-900">
+            <h2 className="title-font font-semibold text-3xl text-gray-900">
               74
             </h2>
-            <p className="leading-relaxed">Pending HOD</p>
+            <p className="leading-relaxed font-medium">Pending HOD</p>
           </div>
         </div>
         <div className="p-4 md:w-1/4 sm:w-1/2 w-full">
@@ -115,10 +115,10 @@ export default function page() {
             >
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
             </svg>
-            <h2 className="title-font font-medium text-3xl text-gray-900">
+            <h2 className="title-font font-semibold text-3xl text-gray-900">
               46
             </h2>
-            <p className="leading-relaxed">Pending Evaluation</p>
+            <p className="leading-relaxed font-medium">Pending Evaluation</p>
           </div>
         </div>
         <div className="p-4 md:w-1/4 sm:w-1/2 w-full">
@@ -149,10 +149,10 @@ export default function page() {
                 ></path>
               </g>
             </svg>
-            <h2 className="title-font font-medium text-3xl text-gray-900">
+            <h2 className="title-font font-semibold text-3xl text-gray-900">
               46
             </h2>
-            <p className="leading-relaxed">Pending Your Approval</p>
+            <p className="leading-relaxed font-medium">Pending Your Approval</p>
           </div>
         </div>
       </div>
