@@ -1,3 +1,14 @@
 export default function page() {
-  return <div>Policy</div>;
+  const iframeProps: React.DetailedHTMLProps<
+    React.IframeHTMLAttributes<HTMLIFrameElement>,
+    HTMLIFrameElement
+  > = {
+    src: "/policy.pdf",
+    frameBorder: "0",
+  };
+  return (
+    <div className="w-full">
+      <iframe className="w-full h-[70rem]" {...iframeProps}></iframe>
+    </div>
+  );
 }
