@@ -1,6 +1,6 @@
 export default function page() {
   return (
-    <div className="px-6 py-8">
+    <div className="lg:p-12 p-2">
       <div className="max-w-2xl mx-auto">
         <div className="mb-24">
           <h1 className="text-3xl font-semibold text-center mb-4">About</h1>
