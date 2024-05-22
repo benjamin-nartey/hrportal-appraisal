@@ -30,11 +30,11 @@ export default function Navigation({
           </button>
         )}
       </div>
-      <div className="flex lg:flex-row bg-[#f4e7ed] flex-col min-h-screen transition-height duration-75 ease-out overflow-hidden">
+      <div className="flex lg:flex-row bg-[#fff] flex-col min-h-screen transition-height duration-75 ease-out overflow-hidden">
         <div className="lg:flex flex-initial h-screen hidden bg-clip-padding backdrop-filter backdrop-blur-md bg-primary">
           <Sidebar />
         </div>
-        <div className="main-content-column bg-[#eaf0fd] h-screen w-full overflow-y-auto overflow-x-hidden">
+        <div className="main-content-column bg-[#fff] h-screen w-full overflow-y-auto overflow-x-hidden">
           <div className="flex border-l-0 lg:border-l border-l-gray-300 w-full justify-between items-center sticky top-0 z-10 bg-primary text-white">
             <div className="w-full relative h-full p-5">
               <div className="w-full flex justify-between items-center">
@@ -78,7 +78,7 @@ export default function Navigation({
             </div>
           </div>
           <div className="w-full min-h-screen bg-white ">{children}</div>
-          <footer className="w-full bg-secondary text-white font-mono flex justify-center items center p-1 ">
+          <footer className="w-full bg-secondary text-white font-mono flex justify-center items center p-1 mt-6 ">
             <div className="w-full h-full bg-primary p-6">
               {` © ${new Date(
                 Date.now()
