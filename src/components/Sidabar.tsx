@@ -16,11 +16,7 @@ import {
   MdSummarize,
 } from "react-icons/md";
 
-type SidebarProps = {
-  closeToggle?: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const Sidebar: React.FC<SidebarProps> = ({ closeToggle }) => {
+const Sidebar = ({ closeToggle }: SetStateProps<boolean>) => {
   const [activeLink, setActiveLink] = useState("");
 
   const handleCloseSidebar = () => {

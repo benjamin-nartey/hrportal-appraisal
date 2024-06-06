@@ -78,13 +78,13 @@ export default function Navigation({
             </div>
           </div>
           <div className="w-full min-h-screen bg-white ">{children}</div>
-          <footer className="w-full bg-secondary text-white font-mono flex justify-center items center p-1 mt-6 ">
+          {/* <footer className="w-full bg-secondary text-white font-mono flex justify-center items center p-1 mt-6 ">
             <div className="w-full h-full bg-primary p-6">
               {` © ${new Date(
                 Date.now()
               ).getFullYear()} Information Technology Department (ITD)`}
             </div>
-          </footer>
+          </footer> */}
         </div>
         {toggleSidebar && (
           <div className="fixed w-4/5 bg-primary h-screen overflow-y-auto shadow-md z-10 animate-slide-in">
