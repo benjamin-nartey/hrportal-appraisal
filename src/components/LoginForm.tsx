@@ -1,7 +1,6 @@
 "use client";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-// import { useRouter } from "next/dist/client/router";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -12,23 +11,30 @@ export default function LoginForm() {
 
     try {
       const formData = new FormData(event.currentTarget);
-      const email = formData.get("email");
-      const password = formData.get("password");
+
+      const login: LoginProps = {
+        email: formData.get("email") as string,
+        password: formData.get("password") as string,
+      };
 
       const response = await fetch("http://localhost:8000/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(login),
       });
 
-      if (response.ok) {
-        console.log(response.json());
-        router.push("/dashboard");
-      } else {
+      if (!response.ok) {
         const errData = await response.json();
-        const errMsg = errData.error;
+        const errMsg: string = errData.error;
         setErrorMessage(errMsg);
+        return;
       }
+      const data: TokenProps = await response.json();
+
+      document.cookie = `token=${data.token}; path=/`;
+
+      // localStorage.setItem("token", JSON.stringify(data.token));
+      router.push("/dashboard");
     } catch (error) {
       console.log(error);
     }
@@ -42,6 +48,7 @@ export default function LoginForm() {
         id="email"
         placeholder="Email"
         required
+        autoComplete="true"
       />
       <input
         className="p-2 outline-none w-full border border-solid border-gray-300 focus:border-secondary"
@@ -49,6 +56,7 @@ export default function LoginForm() {
         name="password"
         id="password"
         placeholder="Password"
+        autoComplete="true"
         required
       />
       {errorMessage && (

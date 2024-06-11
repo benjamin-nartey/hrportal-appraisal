@@ -1,3 +1,10 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Policy Guidlines",
+  description: "This is cocobod appraisal Policy Guidlines page",
+};
+
 export default function page() {
   const iframeProps: React.DetailedHTMLProps<
     React.IframeHTMLAttributes<HTMLIFrameElement>,

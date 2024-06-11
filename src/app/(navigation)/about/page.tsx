@@ -1,8 +1,15 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About",
+  description: "This is cocobod appraisal About page",
+};
+
 export default function page() {
   return (
     <div className="lg:p-12 p-2 relative">
       <div
-        className="w-full h-screen bg-opacity-20 absolute left-0 top-0 opacity-40 "
+        className="w-full h-full bg-opacity-20 absolute left-0 top-0 opacity-40 "
         style={{
           backgroundImage: "url(/type-writer.svg)",
           backgroundSize: "cover",

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import LoginForm from "@/components/LoginForm";
 
-export default function Home() {
+export default function Login() {
   return (
     <main className="relative h-screen w-screen overflow-hidden flex justify-center items-center">
       <div className="absolute top-0 left-0 w-[30rem] h-[30rem] bg-gradient-to-b from-secondary to-primary rounded-full translate-x-[-10rem] translate-y-[-5rem]"></div>

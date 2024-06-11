@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Sidebar from "./Sidabar";
 import { AiFillCloseCircle, AiOutlinePoweroff } from "react-icons/ai";
 import { HiMenu } from "react-icons/hi";
@@ -16,8 +16,14 @@ export default function Navigation({
 }>) {
   const [toggleSidebar, setToggleSidebar] = useState(false);
   const [toggleLogout, setToggleLogout] = useState(false);
-  const [avatarBackground] = useState(getRandomColor());
-  const [avatarText] = useState(getContrastingColor(avatarBackground));
+  const [avatarBackground, setAvatarBackground] = useState("#958254");
+  const [avatarText, setAvatarText] = useState("#000");
+
+  useEffect(() => {
+    const background = getRandomColor();
+    setAvatarBackground(background);
+    setAvatarText(getContrastingColor(background));
+  }, []);
 
   const Pathname = usePathname();
 
@@ -44,10 +50,12 @@ export default function Navigation({
                   </span>
                 </div>
 
-                <HiMenu
-                  onClick={() => setToggleSidebar(true)}
-                  className="text-[25px] text-white cursor-pointer lg:hidden block"
-                />
+                {!toggleSidebar && (
+                  <HiMenu
+                    onClick={() => setToggleSidebar((prev) => !prev)}
+                    className="text-[25px] text-white cursor-pointer lg:hidden block"
+                  />
+                )}
 
                 <div className="lg:block hidden">
                   <div className="flex items-center lg:gap-4 gap-2">
@@ -68,7 +76,10 @@ export default function Navigation({
                       </div>
                     </div>
                     <div>
-                      <button onClick={() => setToggleLogout(!toggleLogout)}>
+                      <button
+                        name="toggle-logout"
+                        onClick={() => setToggleLogout(!toggleLogout)}
+                      >
                         <MdOutlineKeyboardArrowDown size={24} color="#fff" />
                       </button>
                     </div>
@@ -77,14 +88,7 @@ export default function Navigation({
               </div>
             </div>
           </div>
-          <div className="w-full min-h-screen bg-white ">{children}</div>
-          {/* <footer className="w-full bg-secondary text-white font-mono flex justify-center items center p-1 mt-6 ">
-            <div className="w-full h-full bg-primary p-6">
-              {` © ${new Date(
-                Date.now()
-              ).getFullYear()} Information Technology Department (ITD)`}
-            </div>
-          </footer> */}
+          <div className="w-full bg-white ">{children}</div>
         </div>
         {toggleSidebar && (
           <div className="fixed w-4/5 bg-primary h-screen overflow-y-auto shadow-md z-10 animate-slide-in">
@@ -92,7 +96,7 @@ export default function Navigation({
               <AiFillCloseCircle
                 fontSize={30}
                 className="cursor-pointer text-white "
-                onClick={() => setToggleSidebar(false)}
+                onClick={() => setToggleSidebar((prev) => !prev)}
               />
             </div>
             <Sidebar closeToggle={setToggleSidebar} />

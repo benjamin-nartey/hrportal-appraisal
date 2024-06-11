@@ -16,42 +16,18 @@ import {
   MdSummarize,
 } from "react-icons/md";
 
+const isNotActiveStyle: string =
+  "px-5 py-2 flex items-center text-white gap-3 w-full hover:bg-[#b430bb] hover:text-black hover:font-semibold transition-all duration-200 ease-in-out capitalize";
+
+const isActiveStyle: string =
+  "px-5 py-2 flex items-center text-black gap-3 bg-[#D09EE8] font-bold w-full transition-all duration-200 ease-in-out capitalize";
+
 const Sidebar = ({ closeToggle }: SetStateProps<boolean>) => {
   const [activeLink, setActiveLink] = useState("");
 
   const handleCloseSidebar = () => {
     if (closeToggle) closeToggle(false);
   };
-
-  const isNotActiveStyle =
-    "px-5 py-2 flex items-center text-white gap-3 w-full hover:bg-[#b430bb] hover:text-black hover:font-semibold transition-all duration-200 ease-in-out capitalize";
-
-  const isActiveStyle =
-    "px-5 py-2 flex items-center text-black gap-3 bg-[#D09EE8] font-bold w-full transition-all duration-200 ease-in-out capitalize";
-
-  //   const isNotActiveStyle: React.CSSProperties = {
-  //     padding: "0.5rem 1rem",
-  //     display: "flex",
-  //     alignItems: "center",
-  //     color: "white",
-  //     gap: "0.75rem",
-  //     width: "100%",
-  //     transition: "background-color 0.2s, color 0.2s, font-weight 0.2s",
-  //     textTransform: "capitalize",
-  //   };
-
-  //   const isActiveStyle: React.CSSProperties = {
-  //     padding: "0.5rem 1rem",
-  //     display: "flex",
-  //     alignItems: "center",
-  //     color: "#0E1B39",
-  //     gap: "0.75rem",
-  //     backgroundColor: "#e2d5d5",
-  //     fontWeight: "bold",
-  //     width: "100%",
-  //     transition: "background-color 0.2s, color 0.2s, font-weight 0.2s",
-  //     textTransform: "capitalize",
-  //   };
 
   return (
     <div
