@@ -29,11 +29,20 @@ export default function LoginForm() {
         setErrorMessage(errMsg);
         return;
       }
+
       const data: TokenProps = await response.json();
 
-      document.cookie = `token=${data.token}; path=/`;
+      const cookieResponse = await fetch("/api/set-cookie/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: data.token }),
+      });
 
-      // localStorage.setItem("token", JSON.stringify(data.token));
+      if (!cookieResponse.ok) {
+        setErrorMessage("Failed to set cookie");
+        return;
+      }
+
       router.push("/dashboard");
     } catch (error) {
       console.log(error);

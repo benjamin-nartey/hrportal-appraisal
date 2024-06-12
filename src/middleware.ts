@@ -1,13 +1,21 @@
 import { NextResponse } from "next/server";
 import { fetchUser } from "./lib/fetchUser";
-import { cookies } from "next/headers";
+import { getCookie } from "./lib/getCookie";
 
 export async function middleware(request: Request) {
-  const cookieStore = cookies();
-  const token = cookieStore.get("token")?.value;
+  const cookie = request.headers.get("cookie");
+
+  const token = getCookie(cookie);
 
   const data = await fetchUser<UserProps>("http://localhost:8000/user", token);
-  console.log(data);
+
+  console.log(
+    data.User.role.map((roleData) =>
+      roleData.rolePermissions.map(
+        (permissionData) => permissionData.permission.name
+      )
+    )
+  );
 
   console.log("middleware applied");
 

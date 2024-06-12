@@ -1,9 +1,3 @@
-import { permission } from "process";
-import { permission } from "process";
-type SetStateProps<T> = {
-  closeToggle?: React.Dispatch<React.SetStateAction<T>>;
-};
-
 interface LoginProps {
   email: string;
   password: string;
@@ -41,14 +35,18 @@ interface RoleProps {
   rolePermissions: PermissionProps[];
 }
 
-interface UserProps {
+interface UserDataProps {
   id: string;
   name: string;
   email: string;
   division: DivisionProps;
   department: DepartmentProps;
   employee: EmployeeProps;
-  role: RoleProps;
+  role: RoleProps[];
+}
+
+interface UserProps {
+  User: UserDataProps;
 }
 
 interface TokenProps {
