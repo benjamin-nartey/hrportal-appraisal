@@ -81,3 +81,7 @@ interface UserPermissions {
   UPDATE_QUALIFICATIONS: string;
   DELETE_QUALIFICATIONS: string;
 }
+
+interface AccessTokenExpired {
+  error: string;
+}

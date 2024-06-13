@@ -2,15 +2,55 @@ import { NextRequest, NextResponse } from "next/server";
 import { fetchUser } from "./lib/fetchUser";
 import { getCookie } from "./lib/getCookie";
 import { PERMISSIONS } from "./lib/const/permissions";
+import { getNewToken } from "./lib/getNewToken";
 
 export async function middleware(request: NextRequest) {
   const cookie = request.headers.get("cookie");
-
   const token = getCookie(cookie);
 
-  const data = await fetchUser<UserProps>("http://localhost:8000/user", token);
+  if (!token) {
+    console.log("No token found in cookies");
+    return NextResponse.redirect(new URL("unauthorized", request.url));
+  }
 
-  const permissions = data.User?.role.map((roleData) =>
+  let data: UserProps | AccessTokenExpired;
+
+  try {
+    data = await fetchUser<UserProps | AccessTokenExpired>(
+      "http://localhost:8000/user",
+      token
+    );
+  } catch (error) {
+    console.error("Failed to fetch user:", error);
+    return NextResponse.redirect(new URL("unauthorized", request.url));
+  }
+
+  if (!("User" in data)) {
+    if (data.error === "Not Authorized") {
+      try {
+        const tokenData = await getNewToken<TokenProps>(
+          "http://localhost:8000/refresh"
+        );
+
+        data = await fetchUser<UserProps | AccessTokenExpired>(
+          "http://localhost:8000/user",
+          tokenData.token
+        );
+      } catch (error) {
+        console.error(
+          "Failed to refresh token or fetch user with new token:",
+          error
+        );
+        return NextResponse.redirect(new URL("unauthorized", request.url));
+      }
+    } else {
+      return NextResponse.redirect(new URL("unauthorized", request.url));
+    }
+  }
+
+  const userData = data as UserProps;
+
+  const permissions = userData.User?.role.flatMap((roleData) =>
     roleData.rolePermissions.map(
       (permissionData) => permissionData.permission.name
     )
@@ -18,21 +58,17 @@ export async function middleware(request: NextRequest) {
 
   if (
     request.nextUrl.pathname.startsWith("/dashboard") &&
-    permissions?.length > 0 &&
-    permissions[0]?.includes(PERMISSIONS.READ_ALL_USERS)
+    permissions?.includes(PERMISSIONS.READ_ALL_USERS)
   ) {
     return NextResponse.next();
   } else if (
     request.nextUrl.pathname.startsWith("/about") &&
-    permissions?.length > 0 &&
-    permissions[0].includes(PERMISSIONS.READ_ALL_USERS)
+    permissions?.includes(PERMISSIONS.READ_ALL_USERS)
   ) {
     return NextResponse.next();
   }
 
-  console.log("middleware applied");
-
-  // return NextResponse.next();
+  console.log("User does not have the required permissions");
   return NextResponse.redirect(new URL("unauthorized", request.url));
 }
 
