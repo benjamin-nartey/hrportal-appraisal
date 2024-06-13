@@ -5,6 +5,6 @@ export const metadata: Metadata = {
   description: "This is cocobod appraisal HOD Comment page",
 };
 
-export default function page() {
+export default function HODComment() {
   return <div>HOD</div>;
 }

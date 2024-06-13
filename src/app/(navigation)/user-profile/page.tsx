@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 import ProfileCard from "@/components/ProfileCard";
 
-export default function page() {
+export default function UserProfile() {
   return (
     <div className=" flex justify-center items-center  lg:p-12 px-2 py-4 ">
       <ProfileCard />

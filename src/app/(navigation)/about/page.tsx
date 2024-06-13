@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "This is cocobod appraisal About page",
 };
 
-export default function page() {
+export default function About() {
   return (
     <div className="lg:p-12 p-2 relative">
       <div

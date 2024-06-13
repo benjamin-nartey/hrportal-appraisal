@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "This is cocobod appraisal Dashboard page",
 };
 
-export default function page() {
+export default function Dashboard() {
   return (
     <div className="lg:p-12 p-2 ">
       <div className="flex flex-wrap -m-4 text-center">

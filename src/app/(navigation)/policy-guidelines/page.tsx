@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "This is cocobod appraisal Policy Guidlines page",
 };
 
-export default function page() {
+export default function PolicyGuidelines() {
   const iframeProps: React.DetailedHTMLProps<
     React.IframeHTMLAttributes<HTMLIFrameElement>,
     HTMLIFrameElement
