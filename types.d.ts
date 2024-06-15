@@ -52,6 +52,9 @@ interface UserProps {
 interface TokenProps {
   token: string;
 }
+interface AccessTokenProps {
+  accessToken: string;
+}
 
 interface UserPermissions {
   READ_ALL_USERS: string;
