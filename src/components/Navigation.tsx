@@ -9,11 +9,12 @@ import { getRandomColor } from "@/lib/getRandomColor";
 import { getContrastingColor } from "@/lib/getContrastingColor";
 import { usePathname } from "next/navigation";
 
-export default function Navigation({
-  children,
-}: Readonly<{
+interface NavigationProps {
+  userData: UserProps;
   children: React.ReactNode;
-}>) {
+}
+
+export default function Navigation({ userData, children }: NavigationProps) {
   const [toggleSidebar, setToggleSidebar] = useState(false);
   const [toggleLogout, setToggleLogout] = useState(false);
   const [avatarBackground, setAvatarBackground] = useState("#958254");
@@ -26,6 +27,8 @@ export default function Navigation({
   }, []);
 
   const Pathname = usePathname();
+
+  const user = userData.User;
 
   return (
     <Fragment>
@@ -70,10 +73,8 @@ export default function Navigation({
                     </div>
 
                     <div className="flex flex-col ">
-                      <div className="text-[14px] ">Benjamin Nartey</div>
-                      <div className="text-xs text-white/75">
-                        benjamin.nartey@gmail.com
-                      </div>
+                      <div className="text-[14px] ">{user.name}</div>
+                      <div className="text-xs text-white/75">{user.email}</div>
                     </div>
                     <div>
                       <button

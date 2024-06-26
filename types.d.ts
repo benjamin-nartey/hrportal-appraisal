@@ -49,6 +49,10 @@ interface UserProps {
   User: UserDataProps;
 }
 
+interface UsersProps {
+  Users: UserDataProps[];
+}
+
 interface TokenProps {
   token: string;
 }

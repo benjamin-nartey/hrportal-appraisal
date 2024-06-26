@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
-import { FaAddressCard, FaCommentDots } from "react-icons/fa";
+import { FaAddressCard, FaCommentDots, FaUsers } from "react-icons/fa";
 import { FaCircleExclamation } from "react-icons/fa6";
 import { HiDocumentReport } from "react-icons/hi";
 import { IoSettings } from "react-icons/io5";
@@ -22,7 +22,10 @@ const isNotActiveStyle: string =
 const isActiveStyle: string =
   "px-5 py-2 flex items-center text-black gap-3 bg-[#D09EE8] font-bold w-full transition-all duration-200 ease-in-out capitalize";
 
-const Sidebar = ({ closeToggle }: SetStateProps<boolean>) => {
+interface SideBarProps {
+  closeToggle?: Dispatch<SetStateAction<boolean>>;
+}
+const Sidebar = ({ closeToggle }: SideBarProps) => {
   const [activeLink, setActiveLink] = useState("");
 
   const handleCloseSidebar = () => {
@@ -126,6 +129,7 @@ const Sidebar = ({ closeToggle }: SetStateProps<boolean>) => {
             <FaCommentDots size={18} />
             HOD Comment
           </Link>
+
           <Link
             href="/recommendation"
             className={
@@ -139,49 +143,19 @@ const Sidebar = ({ closeToggle }: SetStateProps<boolean>) => {
             <MdRecommend size={20} />
             Recommendation
           </Link>
-          <Link
-            href="/dept-reports"
-            className={
-              activeLink === "dept-reports" ? isActiveStyle : isNotActiveStyle
-            }
-            onClick={() => {
-              setActiveLink("dept-reports");
-              handleCloseSidebar();
-            }}
-          >
-            <HiDocumentReport size={20} />
-            Dept. Reports
-          </Link>
-          <Link
-            href="/send-mail-alerts"
-            className={
-              activeLink === "send-mail-alerts"
-                ? isActiveStyle
-                : isNotActiveStyle
-            }
-            onClick={() => {
-              setActiveLink("send-mail-alerts");
-              handleCloseSidebar();
-            }}
-          >
-            <MdEmail size={20} />
-            Send Email Alerts
-          </Link>
 
           <Link
-            href="/summary-reports"
+            href="/users"
             className={
-              activeLink === "summary-reports"
-                ? isActiveStyle
-                : isNotActiveStyle
+              activeLink === "users" ? isActiveStyle : isNotActiveStyle
             }
             onClick={() => {
-              setActiveLink("summary-reports");
+              setActiveLink("users");
               handleCloseSidebar();
             }}
           >
-            <MdSummarize size={20} />
-            Summary Reports
+            <FaUsers size={20} />
+            Users
           </Link>
 
           <Link

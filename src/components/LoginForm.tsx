@@ -9,6 +9,9 @@ export default function LoginForm() {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
+    const from =
+      new URLSearchParams(window.location.search).get("from") || "/dashboard";
+
     try {
       const formData = new FormData(event.currentTarget);
 
@@ -44,7 +47,7 @@ export default function LoginForm() {
         return;
       }
 
-      router.push("/dashboard");
+      router.push(from);
     } catch (error) {
       console.log(error);
     }
