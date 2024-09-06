@@ -14,10 +14,19 @@ interface DivisionProps {
   divisionName: string;
 }
 
-interface EmployeeProps {
+interface DesignationProps {
+  id: string;
+  name: string;
+}
+
+interface EmployeeDataProps {
   id: string;
   staffNo: string;
   supervisorId: string | null;
+  dateOfBirth: string;
+  dateOfAppointment: string;
+  dateOfLastPromotion: string | null;
+  designation: DesignationProps;
 }
 
 interface PermissionDataProps {
@@ -41,7 +50,7 @@ interface UserDataProps {
   email: string;
   division: DivisionProps;
   department: DepartmentProps;
-  employee: EmployeeProps;
+  employee: EmployeeDataProps;
   role: RoleProps[];
 }
 
@@ -55,9 +64,11 @@ interface UsersProps {
 
 interface TokenProps {
   token: string;
+  refreshToken: string;
 }
 interface AccessTokenProps {
-  accessToken: string;
+  token: string;
+  refreshToken: string;
 }
 
 interface UserPermissions {

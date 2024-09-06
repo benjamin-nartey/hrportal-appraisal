@@ -28,7 +28,7 @@ export default function Navigation({ userData, children }: NavigationProps) {
 
   const Pathname = usePathname();
 
-  const user = userData.User;
+  const user = userData?.User;
 
   return (
     <Fragment>
@@ -73,8 +73,8 @@ export default function Navigation({ userData, children }: NavigationProps) {
                     </div>
 
                     <div className="flex flex-col ">
-                      <div className="text-[14px] ">{user.name}</div>
-                      <div className="text-xs text-white/75">{user.email}</div>
+                      <div className="text-[14px] ">{user?.name}</div>
+                      <div className="text-xs text-white/75">{user?.email}</div>
                     </div>
                     <div>
                       <button

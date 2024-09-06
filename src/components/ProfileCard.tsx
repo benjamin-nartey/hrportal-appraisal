@@ -24,8 +24,8 @@ export default function ProfileCard({ userData }: ProfileCardProps) {
           />
         </div>
         <div className="text-center mt-2">
-          <h2 className="font-semibold">{user.name}</h2>
-          <p className="text-gray-500">{user.email}</p>
+          <h2 className="font-semibold">{user?.name}</h2>
+          <p className="text-gray-500">{user?.email}</p>
         </div>
 
         <div className="lg:p-4 p-2 border-t mx-8 mt-2 flex items-center justify-around gap-6">
@@ -67,9 +67,9 @@ export default function ProfileCard({ userData }: ProfileCardProps) {
             </div>
           </div>
           <div className="flex justify-start items-start flex-col gap-2">
-            <div>{user.employee.staffNo}</div>
+            <div>{user?.employee?.staffNo}</div>
             <div>Head Office</div>
-            <div>{user.department.departmentName}</div>
+            <div>{user?.department?.departmentName}</div>
             <div>March, 31 2021</div>
             <div>DEP. H. R. MANAGER </div>
             <div>DEP. H. R. MANAGER </div>

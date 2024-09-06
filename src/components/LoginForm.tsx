@@ -24,7 +24,7 @@ export default function LoginForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(login),
-        credentials: "include",
+        // credentials: "include",
       });
 
       if (!response.ok) {
@@ -39,7 +39,10 @@ export default function LoginForm() {
       const cookieResponse = await fetch("/api/set-cookie/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token: data.token }),
+        body: JSON.stringify({
+          token: data.token,
+          refreshToken: data.refreshToken,
+        }),
       });
 
       if (!cookieResponse.ok) {

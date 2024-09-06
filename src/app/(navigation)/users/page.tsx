@@ -5,45 +5,24 @@ export const metadata: Metadata = {
   description: "This is cocobod appraisal Users page",
 };
 
-import { fetchAllUsers } from "@/lib/fetchAllUsers";
-import {
-  Table,
-  TableBody,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import UserRow from "./UserRow";
-import { cookies } from "next/headers";
+import { refreshTokenAndFetchAllUsers } from "@/lib/refreshTokenAndFetchUsers";
 
-export default async function Users() {
-  const cookieStore = cookies();
+import { columns } from "./columns";
+import { DataTable } from "../../../components/data-table";
+import { NextRequest, NextResponse } from "next/server";
 
-  const token = cookieStore.get("token")?.value;
-  const usersData = await fetchAllUsers<UsersProps>(
-    "http://localhost:8000/all-users",
-    token
-  );
+export default async function Users(request: NextRequest) {
+  try {
+    const { usersData } = await refreshTokenAndFetchAllUsers();
 
-  const users = usersData.Users;
+    const users = usersData.Users;
 
-  return (
-    <div className="p-8 container">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Department</TableHead>
-            <TableHead>Division</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {users.map((user) => (
-            <UserRow key={user.id} user={user} />
-          ))}
-        </TableBody>
-      </Table>
-    </div>
-  );
+    return (
+      <div className="container mx-auto lg:p-12 p-2">
+        <DataTable columns={columns} data={users} />
+      </div>
+    );
+  } catch (error) {
+    return NextResponse.redirect(new URL("unauthorized", request.url));
+  }
 }

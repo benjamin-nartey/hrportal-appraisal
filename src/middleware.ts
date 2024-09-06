@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCookie } from "./lib/getCookie";
 import { fetchUser } from "./lib/fetchUser";
-import { getNewToken } from "./lib/getNewToken";
 import { PERMISSIONS } from "./lib/const/permissions";
+import { refreshTokenAndFetchUser } from "./lib/refreshTokenAndFetchUser";
 
 async function fetchUserData(
   token: string
@@ -18,28 +18,6 @@ async function fetchUserData(
   }
 }
 
-async function refreshTokenAndFetchUser(): Promise<UserProps> {
-  try {
-    const tokenData = await getNewToken<AccessTokenProps>(
-      "http://localhost:8000/refresh"
-    );
-    if (!tokenData?.accessToken) {
-      throw new Error("Failed to refresh token");
-    }
-    const data = await fetchUser<UserProps>(
-      "http://localhost:8000/user",
-      tokenData.accessToken
-    );
-    return data;
-  } catch (error) {
-    console.error(
-      "Failed to refresh token or fetch user with new token:",
-      error
-    );
-    throw new Error("Unauthorized");
-  }
-}
-
 function checkPermissions(
   permissions: string[],
   requiredPermission: string
@@ -49,7 +27,7 @@ function checkPermissions(
 
 export async function middleware(request: NextRequest) {
   const cookie = request.headers.get("cookie");
-  const token = getCookie(cookie);
+  const token = getCookie(cookie, "token");
 
   if (!token) {
     console.log("No token found in cookies");
@@ -67,7 +45,21 @@ export async function middleware(request: NextRequest) {
   if (!("User" in data)) {
     if (data.error === "Not Authorized") {
       try {
-        data = await refreshTokenAndFetchUser();
+        const { tokenData } = await refreshTokenAndFetchUser();
+
+        const response = NextResponse.next();
+
+        response.cookies.set("token", tokenData.token, {
+          path: "/",
+          httpOnly: true,
+        });
+
+        response.cookies.set("refreshToken", tokenData.refreshToken, {
+          path: "/",
+          httpOnly: true,
+        });
+
+        return response;
       } catch (error) {
         return NextResponse.redirect(new URL("/", request.url));
       }
@@ -112,6 +104,11 @@ export async function middleware(request: NextRequest) {
     checkPermissions(permissions, PERMISSIONS.MAKE_HOD_COMMENT)
   ) {
     return NextResponse.next();
+  } else if (
+    pathname.startsWith("/users") &&
+    checkPermissions(permissions, PERMISSIONS.READ_USER)
+  ) {
+    return NextResponse.next();
   }
 
   console.log("User does not have the required permissions");
@@ -126,5 +123,6 @@ export const config = {
     "/policy-guidelines",
     "/recommendation",
     "/user-profile",
+    "/users",
   ],
 };
