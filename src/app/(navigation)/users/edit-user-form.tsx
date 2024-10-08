@@ -20,7 +20,6 @@ import { useToast } from "@/hooks/use-toast";
 import { fetchDepartments } from "@/lib/fetchDepartments";
 import { fetchRoles } from "@/lib/fetchRoles";
 
-import { useDialogToggleAddUser } from "@/store/dialogToggleAddUser";
 import {
   MultiSelector,
   MultiSelectorContent,
@@ -30,21 +29,27 @@ import {
   MultiSelectorTrigger,
 } from "@/components/MultiSelect";
 
+import { useDialogToggleEditUser } from "@/store/dialogToggleEditUser";
+import { useUserStore } from "@/store/user";
+
 interface UserFormProps extends React.ComponentProps<"form"> {
   tokenData: AccessTokenProps | null;
 }
 
-export function UserForm({ className, tokenData }: UserFormProps) {
+export function EditUserForm({ className, tokenData }: UserFormProps) {
+  const { user } = useUserStore();
   const [departmentOptions, setDepartmentOptions] = useState<DepartmentProps[]>(
     []
   );
   const [roleOptions, setRoleOptions] = useState<RoleProps[]>([]);
-  const [selectedRoleValue, setSelectedRoleValue] = useState<string[]>([]);
+  const [selectedRoleValue, setSelectedRoleValue] = useState<string[]>(
+    user?.role.map((r) => r.id) || []
+  );
   const [selectedDepartmentValue, setSelectedDepartmentValue] =
-    useState<string>("");
+    useState<string>(user?.department.id || "");
 
   const { toast } = useToast();
-  const { setIsOpenAddUser } = useDialogToggleAddUser();
+  const { setIsOpenEditUser } = useDialogToggleEditUser();
 
   useEffect(() => {
     const fetchDepartmentOptions = async () => {
@@ -92,7 +97,7 @@ export function UserForm({ className, tokenData }: UserFormProps) {
         roleId: selectedRoleValue,
       };
 
-      const response = await fetch("http://localhost:8000/user", {
+      const response = await fetch(`http://localhost:8000/user/${user?.id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -117,7 +122,7 @@ export function UserForm({ className, tokenData }: UserFormProps) {
         description: `${data.message}`,
       });
 
-      setIsOpenAddUser(false);
+      setIsOpenEditUser(false);
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -138,7 +143,7 @@ export function UserForm({ className, tokenData }: UserFormProps) {
           className="ring-transparent"
           name="name"
           id="name"
-          placeholder="Enter Name"
+          defaultValue={user?.name}
           required
         />
       </div>
@@ -150,7 +155,7 @@ export function UserForm({ className, tokenData }: UserFormProps) {
           name="email"
           type="email"
           id="email"
-          placeholder="Enter Email"
+          defaultValue={user?.email}
           required
         />
       </div>
@@ -160,6 +165,7 @@ export function UserForm({ className, tokenData }: UserFormProps) {
         <Select
           onValueChange={setSelectedDepartmentValue}
           value={selectedDepartmentValue}
+          defaultValue={user?.department.id}
           name="departmentId"
           required
         >
@@ -184,6 +190,7 @@ export function UserForm({ className, tokenData }: UserFormProps) {
 
       <div className="w-full grid gap-2">
         <Label htmlFor="email">Role</Label>
+
         <MultiSelector
           values={selectedRoleValue}
           onValuesChange={setSelectedRoleValue}
@@ -206,7 +213,7 @@ export function UserForm({ className, tokenData }: UserFormProps) {
       </div>
 
       <Button className="text-white" type="submit">
-        Submit
+        Save changes
       </Button>
     </form>
   );

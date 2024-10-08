@@ -6,15 +6,8 @@ import { Dispatch, SetStateAction, useState } from "react";
 
 import { FaAddressCard, FaCommentDots, FaUsers } from "react-icons/fa";
 import { FaCircleExclamation } from "react-icons/fa6";
-import { HiDocumentReport } from "react-icons/hi";
 import { IoSettings } from "react-icons/io5";
-import {
-  MdDashboard,
-  MdEmail,
-  MdPolicy,
-  MdRecommend,
-  MdSummarize,
-} from "react-icons/md";
+import { MdDashboard, MdPolicy, MdRecommend } from "react-icons/md";
 
 const isNotActiveStyle: string =
   "px-5 py-2 flex items-center text-white gap-3 w-full hover:bg-[#b430bb] hover:text-black hover:font-semibold transition-all duration-200 ease-in-out capitalize";
@@ -36,7 +29,6 @@ const Sidebar = ({ closeToggle }: SideBarProps) => {
     <div
       style={{
         minWidth: "220px",
-        // backgroundImage: "url(/cocoa.jpg)",
         backgroundSize: "cover",
         backgroundPosition: "center center",
       }}

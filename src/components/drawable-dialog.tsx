@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -24,27 +23,36 @@ import {
 export function DrawerDialog({
   title,
   btnTitle,
+  description,
   children,
+  isOpen,
+  setIsOpen,
 }: {
   title: string;
   btnTitle: string;
+  description?: string;
   children: React.ReactNode;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
 }) {
-  const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (isDesktop) {
     return (
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
           <Button className="" variant="outline">
             {btnTitle}
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px] bg-white">
+        <DialogContent className="sm:max-w-[425px] bg-white ">
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
+            <DrawerDescription className="text-transparent">
+              {description}
+            </DrawerDescription>
           </DialogHeader>
+
           {children}
         </DialogContent>
       </Dialog>
@@ -52,7 +60,7 @@ export function DrawerDialog({
   }
 
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
+    <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger asChild>
         <Button className="" variant="outline">
           {btnTitle}
@@ -61,7 +69,11 @@ export function DrawerDialog({
       <DrawerContent className="bg-white">
         <DrawerHeader className="text-left">
           <DrawerTitle>{title}</DrawerTitle>
+          <DrawerDescription className="text-transparent">
+            {description}
+          </DrawerDescription>
         </DrawerHeader>
+
         {children}
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>

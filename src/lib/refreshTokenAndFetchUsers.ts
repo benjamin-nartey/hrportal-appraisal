@@ -26,7 +26,7 @@ export async function refreshTokenAndFetchAllUsers(): Promise<{
     return { usersData, tokenData };
   } catch (error) {
     console.error(
-      "Failed to refresh token or fetch user with new token:",
+      "Failed to refresh token or fetch users with new token:",
       error
     );
     throw new Error("Unauthorized");

@@ -3,6 +3,7 @@ import { Quicksand } from "next/font/google";
 import "../../app/globals.css";
 import Navigation from "@/components/Navigation";
 import { refreshTokenAndFetchUser } from "@/lib/refreshTokenAndFetchUser";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Quicksand({ subsets: ["latin"] });
 
@@ -21,6 +22,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Navigation userData={userData}>{children}</Navigation>
+        <Toaster />
       </body>
     </html>
   );

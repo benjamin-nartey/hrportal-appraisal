@@ -29,20 +29,25 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
-
-import { DrawerDialog } from "./drawable-dialog";
-import { UserForm } from "../app/(navigation)/users/user-form";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  drawalDialogComponent: React.ReactNode;
+  drawalEditComponent: React.ReactNode;
+  isOpenAddUser: boolean;
+  isOpenEditUser: boolean;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  drawalDialogComponent,
+  drawalEditComponent,
+  isOpenAddUser,
+  isOpenEditUser,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -75,10 +80,8 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center gap-2 py-4">
         <Input
           placeholder="Filter Name..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
+          value={(table.getState()?.globalFilter as string) ?? ""}
+          onChange={(event) => table.setGlobalFilter(event.target.value)}
           className="max-w-sm"
         />
 
@@ -109,9 +112,8 @@ export function DataTable<TData, TValue>({
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <DrawerDialog title="Add User" btnTitle="Add User">
-          <UserForm />
-        </DrawerDialog>
+        {drawalDialogComponent && drawalDialogComponent}
+        {isOpenEditUser && drawalEditComponent}
       </div>
 
       <div className="rounded-md border">

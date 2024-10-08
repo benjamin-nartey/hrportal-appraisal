@@ -10,7 +10,7 @@ import { getContrastingColor } from "@/lib/getContrastingColor";
 import { usePathname } from "next/navigation";
 
 interface NavigationProps {
-  userData: UserProps;
+  userData: UserProps | null;
   children: React.ReactNode;
 }
 

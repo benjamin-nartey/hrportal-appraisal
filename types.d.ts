@@ -9,6 +9,10 @@ interface DepartmentProps {
   divisionId: string;
 }
 
+interface DepartmentsDataProps {
+  departments: DepartmentProps[];
+}
+
 interface DivisionProps {
   id: string;
   divisionName: string;
@@ -44,6 +48,10 @@ interface RoleProps {
   rolePermissions: PermissionProps[];
 }
 
+interface RoleDataProps {
+  data: RoleProps[];
+}
+
 interface UserDataProps {
   id: string;
   name: string;
@@ -52,6 +60,25 @@ interface UserDataProps {
   department: DepartmentProps;
   employee: EmployeeDataProps;
   role: RoleProps[];
+}
+
+interface CreateUserDataProps {
+  name: string;
+  email: string;
+  departmentId: string;
+  roleId: string[];
+}
+
+interface CreatedUserResponseProps {
+  message: string;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    division: DivisionProps;
+    department: DepartmentProps;
+    role: { id: string; name: string };
+  };
 }
 
 interface UserProps {

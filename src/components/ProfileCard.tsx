@@ -5,11 +5,11 @@ import { IoLocationSharp } from "react-icons/io5";
 import { MdEmail, MdGrade, MdNumbers } from "react-icons/md";
 
 interface ProfileCardProps {
-  userData: UserProps;
+  userData: UserProps | null;
 }
 
 export default function ProfileCard({ userData }: ProfileCardProps) {
-  const user = userData.User;
+  const user = userData?.User;
   return (
     <>
       <div className=" mx-4 sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto bg-white shadow-xl rounded-lg text-gray-900">
