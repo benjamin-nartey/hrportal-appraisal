@@ -2,6 +2,8 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 export default function LoginForm() {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState("");
@@ -20,7 +22,7 @@ export default function LoginForm() {
         password: formData.get("password") as string,
       };
 
-      const response = await fetch("http://localhost:8000/login", {
+      const response = await fetch(`${BASE_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(login),

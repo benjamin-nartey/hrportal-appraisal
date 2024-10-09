@@ -34,6 +34,8 @@ interface UserFormProps extends React.ComponentProps<"form"> {
   tokenData: AccessTokenProps | null;
 }
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 export function UserForm({ className, tokenData }: UserFormProps) {
   const [departmentOptions, setDepartmentOptions] = useState<DepartmentProps[]>(
     []
@@ -50,7 +52,7 @@ export function UserForm({ className, tokenData }: UserFormProps) {
     const fetchDepartmentOptions = async () => {
       try {
         const data = await fetchDepartments<DepartmentsDataProps>(
-          "http://localhost:8000/department",
+          `${BASE_URL}/department`,
           tokenData?.token
         );
 
@@ -67,7 +69,7 @@ export function UserForm({ className, tokenData }: UserFormProps) {
     const fetchRoleOptions = async () => {
       try {
         const data = await fetchRoles<RoleDataProps>(
-          "http://localhost:8000/role",
+          `${BASE_URL}/role`,
           tokenData?.token
         );
 
@@ -92,7 +94,7 @@ export function UserForm({ className, tokenData }: UserFormProps) {
         roleId: selectedRoleValue,
       };
 
-      const response = await fetch("http://localhost:8000/user", {
+      const response = await fetch(`${BASE_URL}/user`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

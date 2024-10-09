@@ -2,6 +2,8 @@ import { cookies } from "next/headers";
 import { getNewToken } from "./getNewToken";
 import { fetchAllUsers } from "./fetchAllUsers";
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 export async function refreshTokenAndFetchAllUsers(): Promise<{
   usersData: UsersProps;
   tokenData: AccessTokenProps;
@@ -11,7 +13,7 @@ export async function refreshTokenAndFetchAllUsers(): Promise<{
     const refreshToken = cookieStore.get("refreshToken")?.value as string;
 
     const tokenData = await getNewToken<AccessTokenProps>(
-      `http://localhost:8000/refresh/${refreshToken}`
+      `${BASE_URL}/refresh/${refreshToken}`
     );
 
     if (!tokenData?.token) {
@@ -19,7 +21,7 @@ export async function refreshTokenAndFetchAllUsers(): Promise<{
     }
 
     const usersData = await fetchAllUsers<UsersProps>(
-      "http://localhost:8000/all-users",
+      `${BASE_URL}/all-users`,
       tokenData.token
     );
 

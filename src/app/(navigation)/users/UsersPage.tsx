@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { DataTable } from "@/components/data-table";
 import { DrawerDialog } from "@/components/drawable-dialog";
 import { UserForm } from "./user-form";
@@ -8,6 +8,8 @@ import useColumns from "./columns";
 import { useDialogToggleAddUser } from "@/store/dialogToggleAddUser";
 import { useDialogToggleEditUser } from "@/store/dialogToggleEditUser";
 import { EditUserForm } from "./edit-user-form";
+
+import { useTokenDataStore } from "@/store/tokenData";
 
 interface UsersPageProps {
   users: UserDataProps[];
@@ -18,6 +20,12 @@ export default function UsersPage({ users, tokenData }: UsersPageProps) {
   const columns = useColumns();
   const { isOpenAddUser, setIsOpenAddUser } = useDialogToggleAddUser();
   const { isOpenEditUser, setIsOpenEditUser } = useDialogToggleEditUser();
+
+  const { updateTokenData } = useTokenDataStore();
+
+  useEffect(() => {
+    updateTokenData(tokenData);
+  }, []);
 
   return (
     <>

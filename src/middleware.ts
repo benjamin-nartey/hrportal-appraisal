@@ -152,11 +152,13 @@ const routePermissions: { [key: string]: string } = {
   "/users": PERMISSIONS.READ_USER,
 };
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 async function fetchUserData(
   token: string
 ): Promise<UserProps | AccessTokenExpired> {
   try {
-    return await fetchUser("http://localhost:8000/user", token);
+    return await fetchUser(`${BASE_URL}/user`, token);
   } catch (error) {
     console.error("Failed to fetch user:", error);
     throw new Error("Unauthorized");
