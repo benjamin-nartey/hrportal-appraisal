@@ -23,6 +23,7 @@ interface MultiSelectorProps
   extends React.ComponentPropsWithoutRef<typeof CommandPrimitive> {
   values: string[];
   onValuesChange: (value: string[]) => void;
+  name?: string;
   loop?: boolean;
 }
 
@@ -70,6 +71,7 @@ const MultiSelector = ({
   loop = false,
   className,
   children,
+  name,
   dir,
   ...props
 }: MultiSelectorProps) => {
@@ -219,6 +221,13 @@ const MultiSelector = ({
         {...props}
       >
         {children}
+        {name && (
+          <input
+            type="hidden"
+            name={name}
+            value={value.join(",")} // Join selected values into a comma-separated string
+          />
+        )}
       </Command>
     </MultiSelectContext.Provider>
   );

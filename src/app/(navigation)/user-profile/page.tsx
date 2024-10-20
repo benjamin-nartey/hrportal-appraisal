@@ -3,7 +3,6 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "User Profile",
-  description: "This is cocobod appraisal User Profile page",
 };
 
 import ProfileCard from "@/components/ProfileCard";

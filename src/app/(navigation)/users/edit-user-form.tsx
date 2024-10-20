@@ -29,7 +29,7 @@ import {
   MultiSelectorTrigger,
 } from "@/components/MultiSelect";
 
-import { useDialogToggleEditUser } from "@/store/dialogToggleEditUser";
+import { useDialogToggle } from "@/store/dialogToggle";
 import { useUserStore } from "@/store/user";
 
 interface UserFormProps extends React.ComponentProps<"form"> {
@@ -51,7 +51,7 @@ export function EditUserForm({ className, tokenData }: UserFormProps) {
     useState<string>(user?.department.id || "");
 
   const { toast } = useToast();
-  const { setIsOpenEditUser } = useDialogToggleEditUser();
+  const { toggleDialog } = useDialogToggle();
 
   useEffect(() => {
     const fetchDepartmentOptions = async () => {
@@ -124,7 +124,7 @@ export function EditUserForm({ className, tokenData }: UserFormProps) {
         description: `${data.message}`,
       });
 
-      setIsOpenEditUser(false);
+      toggleDialog.setIsOpenEditUser(false);
     } catch (error: any) {
       toast({
         variant: "destructive",

@@ -5,8 +5,8 @@ import "../../app/globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "login",
-  description: "This is cocobod appraisal login page",
+  title: "Unauthorized",
+  description: "You are not authorized to view this page",
 };
 
 export default function RootLayout({

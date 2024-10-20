@@ -1,7 +1,7 @@
-export async function fetchUser<T>(
+export async function fetchAllEmployees<T>(
   url: string,
   token: string | undefined
-): Promise<T | any> {
+): Promise<T> {
   try {
     const res = await fetch(url, {
       method: "GET",
@@ -12,7 +12,7 @@ export async function fetchUser<T>(
     });
 
     if (res.status === 401) {
-      return await res.json();
+      throw new Error("Not Authorized");
     }
 
     const result: T = await res.json();

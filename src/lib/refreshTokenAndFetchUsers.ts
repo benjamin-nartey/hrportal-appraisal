@@ -11,19 +11,33 @@ export async function refreshTokenAndFetchAllUsers(): Promise<{
   try {
     const cookieStore = cookies();
     const refreshToken = cookieStore.get("refreshToken")?.value as string;
+    const token = cookieStore.get("token")?.value as string;
 
-    const tokenData = await getNewToken<AccessTokenProps>(
-      `${BASE_URL}/refresh/${refreshToken}`
+    const usersData: UsersProps | any = await fetchAllUsers<UsersProps>(
+      `${BASE_URL}/all-users`,
+      token
     );
 
-    if (!tokenData?.token) {
-      throw new Error("Failed to refresh token");
+    if (usersData?.error === "Not Authorized") {
+      const tokenData = await getNewToken<AccessTokenProps>(
+        `${BASE_URL}/refresh/${refreshToken}`
+      );
+      if (!tokenData?.token) {
+        throw new Error("Failed to refresh token");
+      }
+
+      const usersData = await fetchAllUsers<UsersProps>(
+        `${BASE_URL}/all-users`,
+        tokenData.token
+      );
+
+      return { usersData, tokenData };
     }
 
-    const usersData = await fetchAllUsers<UsersProps>(
-      `${BASE_URL}/all-users`,
-      tokenData.token
-    );
+    const tokenData: AccessTokenProps = {
+      token,
+      refreshToken,
+    };
 
     return { usersData, tokenData };
   } catch (error) {

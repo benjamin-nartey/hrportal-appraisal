@@ -3,7 +3,6 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Users",
-  description: "This is cocobod appraisal Users page",
 };
 
 import { refreshTokenAndFetchAllUsers } from "@/lib/refreshTokenAndFetchUsers";

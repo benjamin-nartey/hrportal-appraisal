@@ -2,9 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Dispatch, SetStateAction, useState } from "react";
+import { usePathname } from "next/navigation";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-import { FaAddressCard, FaCommentDots, FaUsers } from "react-icons/fa";
+import {
+  FaAddressCard,
+  FaCommentDots,
+  FaUsers,
+  FaUserShield,
+} from "react-icons/fa";
 import { FaCircleExclamation } from "react-icons/fa6";
 import { IoSettings } from "react-icons/io5";
 import { MdDashboard, MdPolicy, MdRecommend } from "react-icons/md";
@@ -19,7 +25,7 @@ interface SideBarProps {
   closeToggle?: Dispatch<SetStateAction<boolean>>;
 }
 const Sidebar = ({ closeToggle }: SideBarProps) => {
-  const [activeLink, setActiveLink] = useState("");
+  const pathname = usePathname();
 
   const handleCloseSidebar = () => {
     if (closeToggle) closeToggle(false);
@@ -56,10 +62,9 @@ const Sidebar = ({ closeToggle }: SideBarProps) => {
           <Link
             href="/dashboard"
             className={
-              activeLink === "dashboard" ? isActiveStyle : isNotActiveStyle
+              pathname === "/dashboard" ? isActiveStyle : isNotActiveStyle
             }
             onClick={() => {
-              setActiveLink("dashboard");
               handleCloseSidebar();
             }}
           >
@@ -70,10 +75,9 @@ const Sidebar = ({ closeToggle }: SideBarProps) => {
           <Link
             href="/user-profile"
             className={
-              activeLink === "profile" ? isActiveStyle : isNotActiveStyle
+              pathname === "/user-profile" ? isActiveStyle : isNotActiveStyle
             }
             onClick={() => {
-              setActiveLink("profile");
               handleCloseSidebar();
             }}
           >
@@ -83,11 +87,8 @@ const Sidebar = ({ closeToggle }: SideBarProps) => {
 
           <Link
             href="/about"
-            className={
-              activeLink === "about" ? isActiveStyle : isNotActiveStyle
-            }
+            className={pathname === "/about" ? isActiveStyle : isNotActiveStyle}
             onClick={() => {
-              setActiveLink("about");
               handleCloseSidebar();
             }}
           >
@@ -98,10 +99,11 @@ const Sidebar = ({ closeToggle }: SideBarProps) => {
           <Link
             href="/policy-guidelines"
             className={
-              activeLink === "policy" ? isActiveStyle : isNotActiveStyle
+              pathname === "/policy-guidelines"
+                ? isActiveStyle
+                : isNotActiveStyle
             }
             onClick={() => {
-              setActiveLink("policy");
               handleCloseSidebar();
             }}
           >
@@ -111,10 +113,9 @@ const Sidebar = ({ closeToggle }: SideBarProps) => {
           <Link
             href="/hod-comment"
             className={
-              activeLink === "hod-comment" ? isActiveStyle : isNotActiveStyle
+              pathname === "/hod-comment" ? isActiveStyle : isNotActiveStyle
             }
             onClick={() => {
-              setActiveLink("hod-comment");
               handleCloseSidebar();
             }}
           >
@@ -125,10 +126,9 @@ const Sidebar = ({ closeToggle }: SideBarProps) => {
           <Link
             href="/recommendation"
             className={
-              activeLink === "recommendation" ? isActiveStyle : isNotActiveStyle
+              pathname === "/recommendation" ? isActiveStyle : isNotActiveStyle
             }
             onClick={() => {
-              setActiveLink("recommendation");
               handleCloseSidebar();
             }}
           >
@@ -138,27 +138,34 @@ const Sidebar = ({ closeToggle }: SideBarProps) => {
 
           <Link
             href="/users"
+            className={pathname === "/users" ? isActiveStyle : isNotActiveStyle}
+            onClick={() => {
+              handleCloseSidebar();
+            }}
+          >
+            <FaUserShield size={20} />
+            Users
+          </Link>
+
+          <Link
+            href="/employees"
             className={
-              activeLink === "users" ? isActiveStyle : isNotActiveStyle
+              pathname === "/employees" ? isActiveStyle : isNotActiveStyle
             }
             onClick={() => {
-              setActiveLink("users");
               handleCloseSidebar();
             }}
           >
             <FaUsers size={20} />
-            Users
+            Employees
           </Link>
 
           <Link
             href="/configurations"
             className={
-              activeLink === "summary-reports"
-                ? isActiveStyle
-                : isNotActiveStyle
+              pathname === "/configurations" ? isActiveStyle : isNotActiveStyle
             }
             onClick={() => {
-              setActiveLink("summary-reports");
               handleCloseSidebar();
             }}
           >

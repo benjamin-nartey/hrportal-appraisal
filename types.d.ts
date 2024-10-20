@@ -33,6 +33,44 @@ interface EmployeeDataProps {
   designation: DesignationProps;
 }
 
+interface EmployeeProps {
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    division: DivisionProps;
+  };
+  id: string;
+  staffNo: string;
+  supervisor: {
+    id: string;
+    user: {
+      name: string;
+    };
+  };
+  dateOfBirth: string;
+  dateOfAppointment: string;
+  dateOfLastPromotion: string;
+  stateOfEmployee: string;
+  location: {
+    id: string;
+    name: string;
+  };
+  designation: DesignationProps;
+  department: DepartmentProps;
+  qualification: {
+    id: string;
+    name: string;
+  };
+}
+
+interface AllEmployeesProps {
+  Employees: EmployeeProps[];
+  totalEmployees: number;
+  totalPages: number;
+  currentPage: number;
+}
+
 interface PermissionDataProps {
   id: string;
   name: string;

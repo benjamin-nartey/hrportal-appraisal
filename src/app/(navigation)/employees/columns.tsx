@@ -30,8 +30,9 @@ import { useDialogToggle } from "@/store/dialogToggle";
 import { useTokenDataStore } from "@/store/tokenData";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { formatDate } from "@/lib/formatDate";
 
-const useColumns = (): ColumnDef<UserDataProps>[] => {
+const useColumns = (): ColumnDef<EmployeeProps>[] => {
   const { updateUser } = useUserStore();
   const { toggleDialog } = useDialogToggle();
   const [isOpenDeleteAlert, setisOpenDeleteAlert] = useState(false);
@@ -66,24 +67,37 @@ const useColumns = (): ColumnDef<UserDataProps>[] => {
       enableHiding: false,
     },
     {
-      accessorKey: "name",
+      accessorKey: "user",
       header: "Name",
+      cell: ({ row }) => {
+        const user = row.getValue("user") as {
+          id: string;
+          name: string;
+          email: string;
+          division: {
+            id: string;
+            divisionName: string;
+          };
+        };
+
+        return <div className="capitalize">{user.name}</div>;
+      },
     },
     {
       accessorKey: "email",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className=""
-          >
-            <h1 className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              EMAIL
-            </h1>
-            <ArrowUpDown className="ml-2 h-4 w-4 text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400" />
-          </Button>
-        );
+      header: "Email",
+      cell: ({ row }) => {
+        const user = row.getValue("user") as {
+          id: string;
+          name: string;
+          email: string;
+          division: {
+            id: string;
+            divisionName: string;
+          };
+        };
+
+        return <div className="capitalize">{user.email}</div>;
       },
     },
     {
@@ -93,26 +107,123 @@ const useColumns = (): ColumnDef<UserDataProps>[] => {
         const department = row.getValue("department") as {
           departmentName: string;
         };
-        return <div className="capitalize">{department.departmentName}</div>;
+        return <div className="capitalize">{department?.departmentName}</div>;
       },
     },
     {
       accessorKey: "division",
       header: "Division",
       cell: ({ row }) => {
-        const division = row.getValue("division") as { divisionName: string };
-        return <div className="capitalize">{division.divisionName}</div>;
+        const user = row.getValue("user") as {
+          id: string;
+          name: string;
+          email: string;
+          division: {
+            id: string;
+            divisionName: string;
+          };
+        };
+
+        return <div className="capitalize">{user.division.divisionName}</div>;
+      },
+    },
+    {
+      accessorKey: "staffNo",
+      header: "Staff ID",
+    },
+    {
+      accessorKey: "supervisor",
+      header: "Supervisor's Name",
+      cell: ({ row }) => {
+        const supervisor = row.getValue("supervisor") as {
+          id: string;
+          user: {
+            name: string;
+          };
+        };
+
+        return <div className="capitalize">{supervisor.user.name}</div>;
+      },
+    },
+    {
+      accessorKey: "designation",
+      header: "Designation",
+      cell: ({ row }) => {
+        const designation = row.getValue("designation") as {
+          id: string;
+          name: string;
+        };
+
+        return <div className="capitalize">{designation.name}</div>;
+      },
+    },
+    {
+      accessorKey: "qualification",
+      header: "Qualification",
+      cell: ({ row }) => {
+        const qualification = row.getValue("qualification") as {
+          id: string;
+          name: string;
+        };
+
+        return <div className="capitalize">{qualification.name}</div>;
+      },
+    },
+    {
+      accessorKey: "dateOfBirth",
+      header: "Date Of Birth",
+      cell: ({ row }) => {
+        const dateOfBirth = row.getValue("dateOfBirth") as string;
+
+        return <div className="capitalize">{formatDate(dateOfBirth)}</div>;
+      },
+    },
+    {
+      accessorKey: "dateOfAppointment",
+      header: "Date Of First Appointment",
+      cell: ({ row }) => {
+        const dateOfAppointment = row.getValue("dateOfAppointment") as string;
+
+        return (
+          <div className="capitalize">{formatDate(dateOfAppointment)}</div>
+        );
+      },
+    },
+    {
+      accessorKey: "dateOfLastPromotion",
+      header: "Date Of Last Promotion",
+      cell: ({ row }) => {
+        const dateOfLastPromotion = row.getValue(
+          "dateOfLastPromotion"
+        ) as string;
+
+        return (
+          <div className="capitalize">{formatDate(dateOfLastPromotion)}</div>
+        );
+      },
+    },
+    { accessorKey: "stateOfEmployee", header: "STATUS" },
+    {
+      accessorKey: "location",
+      header: "Location",
+      cell: ({ row }) => {
+        const location = row.getValue("location") as {
+          id: string;
+          name: string;
+        };
+
+        return <div className="capitalize">{location.name}</div>;
       },
     },
     {
       id: "actions",
       cell: ({ row }) => {
-        const user = row.original;
+        const employee = row.original;
         const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
         const handleDelete = async () => {
           try {
-            const response = await fetch(`${BASE_URL}/user/${user.id}`, {
+            const response = await fetch(`${BASE_URL}/user/${employee.id}`, {
               method: "DELETE",
               cache: "no-store",
               headers: {
@@ -159,7 +270,7 @@ const useColumns = (): ColumnDef<UserDataProps>[] => {
                   <AlertDialogAction
                     className="text-white"
                     onClick={() => {
-                      handleDelete();
+                      // handleDelete();
                       setisOpenDeleteAlert(false);
                     }}
                   >
@@ -181,8 +292,8 @@ const useColumns = (): ColumnDef<UserDataProps>[] => {
                 <DropdownMenuItem
                   className="hover:bg-slate-300 cursor-pointer"
                   onClick={() => {
-                    updateUser(user);
-                    toggleDialog.setIsOpenEditUser(true);
+                    // updateUser(user);
+                    toggleDialog.setIsOpenEditEmployee(true);
                   }}
                 >
                   Edit User

@@ -20,7 +20,6 @@ import { useToast } from "@/hooks/use-toast";
 import { fetchDepartments } from "@/lib/fetchDepartments";
 import { fetchRoles } from "@/lib/fetchRoles";
 
-import { useDialogToggle } from "@/store/dialogToggle";
 import {
   MultiSelector,
   MultiSelectorContent,
@@ -30,20 +29,26 @@ import {
   MultiSelectorTrigger,
 } from "@/components/MultiSelect";
 
+import { useDialogToggle } from "@/store/dialogToggle";
+import { useUserStore } from "@/store/user";
+
 interface UserFormProps extends React.ComponentProps<"form"> {
   tokenData: AccessTokenProps | null;
 }
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-export function UserForm({ className, tokenData }: UserFormProps) {
+export function EditEmployeeForm({ className, tokenData }: UserFormProps) {
+  const { user } = useUserStore();
   const [departmentOptions, setDepartmentOptions] = useState<DepartmentProps[]>(
     []
   );
   const [roleOptions, setRoleOptions] = useState<RoleProps[]>([]);
-  const [selectedRoleValue, setSelectedRoleValue] = useState<string[]>([]);
+  const [selectedRoleValue, setSelectedRoleValue] = useState<string[]>(
+    user?.role.map((r) => r.id) || []
+  );
   const [selectedDepartmentValue, setSelectedDepartmentValue] =
-    useState<string>("");
+    useState<string>(user?.department.id || "");
 
   const { toast } = useToast();
   const { toggleDialog } = useDialogToggle();
@@ -94,7 +99,7 @@ export function UserForm({ className, tokenData }: UserFormProps) {
         roleId: selectedRoleValue,
       };
 
-      const response = await fetch(`${BASE_URL}/user`, {
+      const response = await fetch(`${BASE_URL}/user/${user?.id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -119,7 +124,7 @@ export function UserForm({ className, tokenData }: UserFormProps) {
         description: `${data.message}`,
       });
 
-      toggleDialog.setIsOpenAddUser(false);
+      toggleDialog.setIsOpenEditEmployee(false);
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -140,7 +145,7 @@ export function UserForm({ className, tokenData }: UserFormProps) {
           className="ring-transparent"
           name="name"
           id="name"
-          placeholder="Enter Name"
+          defaultValue={user?.name}
           required
         />
       </div>
@@ -152,16 +157,17 @@ export function UserForm({ className, tokenData }: UserFormProps) {
           name="email"
           type="email"
           id="email"
-          placeholder="Enter Email"
+          defaultValue={user?.email}
           required
         />
       </div>
 
       <div className="w-full grid gap-2">
-        <Label htmlFor="departmentId">Department</Label>
+        <Label htmlFor="email">Department</Label>
         <Select
           onValueChange={setSelectedDepartmentValue}
           value={selectedDepartmentValue}
+          defaultValue={user?.department.id}
           name="departmentId"
           required
         >
@@ -185,13 +191,13 @@ export function UserForm({ className, tokenData }: UserFormProps) {
       </div>
 
       <div className="w-full grid gap-2">
-        <Label htmlFor="roleId">Role</Label>
+        <Label htmlFor="email">Role</Label>
+
         <MultiSelector
           values={selectedRoleValue}
           onValuesChange={setSelectedRoleValue}
           loop
           className="max-w-xs bg-white"
-          name="roleId"
         >
           <MultiSelectorTrigger roleOptions={roleOptions}>
             <MultiSelectorInput placeholder="" />
@@ -209,7 +215,7 @@ export function UserForm({ className, tokenData }: UserFormProps) {
       </div>
 
       <Button className="text-white" type="submit">
-        Submit
+        Save changes
       </Button>
     </form>
   );

@@ -30,13 +30,15 @@ import {
   MultiSelectorTrigger,
 } from "@/components/MultiSelect";
 
+import { DatePicker } from "@/components/datePickerCustom";
+
 interface UserFormProps extends React.ComponentProps<"form"> {
   tokenData: AccessTokenProps | null;
 }
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-export function UserForm({ className, tokenData }: UserFormProps) {
+export function EmployeeForm({ className, tokenData }: UserFormProps) {
   const [departmentOptions, setDepartmentOptions] = useState<DepartmentProps[]>(
     []
   );
@@ -47,6 +49,8 @@ export function UserForm({ className, tokenData }: UserFormProps) {
 
   const { toast } = useToast();
   const { toggleDialog } = useDialogToggle();
+
+  const [date, setDate] = useState<Date>();
 
   useEffect(() => {
     const fetchDepartmentOptions = async () => {
@@ -119,7 +123,7 @@ export function UserForm({ className, tokenData }: UserFormProps) {
         description: `${data.message}`,
       });
 
-      toggleDialog.setIsOpenAddUser(false);
+      toggleDialog.setIsOpenAddEmployee(false);
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -131,6 +135,7 @@ export function UserForm({ className, tokenData }: UserFormProps) {
 
   return (
     <form
+      id="employee-form"
       onSubmit={handleSubmit}
       className={cn("grid items-start gap-4", className)}
     >
@@ -157,8 +162,26 @@ export function UserForm({ className, tokenData }: UserFormProps) {
         />
       </div>
 
+      <div className="grid gap-2">
+        <Label htmlFor="staffNo">Staff ID</Label>
+        <Input
+          className="ring-transparent"
+          name="staffNo"
+          type="number"
+          min={0}
+          id="staffNo"
+          placeholder="Enter Number"
+          required
+        />
+      </div>
+
+      <div className="grid gap-2">
+        <Label>Date Of Birth</Label>
+        <DatePicker />
+      </div>
+
       <div className="w-full grid gap-2">
-        <Label htmlFor="departmentId">Department</Label>
+        <Label htmlFor="email">Department</Label>
         <Select
           onValueChange={setSelectedDepartmentValue}
           value={selectedDepartmentValue}
@@ -185,13 +208,12 @@ export function UserForm({ className, tokenData }: UserFormProps) {
       </div>
 
       <div className="w-full grid gap-2">
-        <Label htmlFor="roleId">Role</Label>
+        <Label htmlFor="email">Role</Label>
         <MultiSelector
           values={selectedRoleValue}
           onValuesChange={setSelectedRoleValue}
           loop
           className="max-w-xs bg-white"
-          name="roleId"
         >
           <MultiSelectorTrigger roleOptions={roleOptions}>
             <MultiSelectorInput placeholder="" />

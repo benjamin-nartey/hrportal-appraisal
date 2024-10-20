@@ -5,8 +5,9 @@ import "../../app/globals.css";
 const inter = Quicksand({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "login",
-  description: "This is cocobod appraisal login page",
+  title: "login | COCOBOD Appraisal Sysytem",
+  description: "COCOBOD Appraisal Sysytem",
+  applicationName: "COCOBOD Appraisal Sysytem",
 };
 
 export default function RootLayout({

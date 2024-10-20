@@ -3,7 +3,6 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Dashboard",
-  description: "This is cocobod appraisal Dashboard page",
 };
 
 export default function Dashboard() {
