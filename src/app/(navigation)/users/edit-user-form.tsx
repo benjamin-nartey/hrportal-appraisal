@@ -163,7 +163,7 @@ export function EditUserForm({ className, tokenData }: UserFormProps) {
       </div>
 
       <div className="w-full grid gap-2">
-        <Label htmlFor="email">Department</Label>
+        <legend className="text-sm font-medium">Department</legend>
         <Select
           onValueChange={setSelectedDepartmentValue}
           value={selectedDepartmentValue}
@@ -178,7 +178,7 @@ export function EditUserForm({ className, tokenData }: UserFormProps) {
             <SelectGroup>
               {departmentOptions?.map((option) => (
                 <SelectItem
-                  className="cursor-pointer"
+                  className="cursor-pointer  hover:bg-secondary hover:text-black"
                   key={option.id}
                   value={option.id}
                 >
@@ -191,7 +191,7 @@ export function EditUserForm({ className, tokenData }: UserFormProps) {
       </div>
 
       <div className="w-full grid gap-2">
-        <Label htmlFor="email">Role</Label>
+        <legend className="text-sm font-medium">Role</legend>
 
         <MultiSelector
           values={selectedRoleValue}
@@ -200,7 +200,7 @@ export function EditUserForm({ className, tokenData }: UserFormProps) {
           className="max-w-xs bg-white"
         >
           <MultiSelectorTrigger roleOptions={roleOptions}>
-            <MultiSelectorInput placeholder="" />
+            <MultiSelectorInput placeholder="Select Role" />
           </MultiSelectorTrigger>
           <MultiSelectorContent className="bg-white">
             <MultiSelectorList>

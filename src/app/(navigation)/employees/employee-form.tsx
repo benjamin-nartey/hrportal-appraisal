@@ -42,15 +42,46 @@ export function EmployeeForm({ className, tokenData }: UserFormProps) {
   const [departmentOptions, setDepartmentOptions] = useState<DepartmentProps[]>(
     []
   );
+  const [designationOptions, setDesignationOptions] = useState([]);
+  const [employeeStatusOptions, setEmployeeStatusOptions] = useState([]);
+  const [qualificationOptions, setQualificationOptions] = useState([]);
+  const [locationOptions, setLocationOptions] = useState([]);
+  const [supervisorOptions, setSupervisorOptions] = useState([]);
+
   const [roleOptions, setRoleOptions] = useState<RoleProps[]>([]);
+
   const [selectedRoleValue, setSelectedRoleValue] = useState<string[]>([]);
+
   const [selectedDepartmentValue, setSelectedDepartmentValue] =
+    useState<string>("");
+
+  const [selectedDesignationValue, setSelectedDesignationValue] =
+    useState<string>("");
+
+  const [selectedEmployeeStatusValue, setSelectedEmployeeStatusValue] =
+    useState<string>("");
+
+  const [selectedQualificationValue, setSelectedQualificationValue] =
+    useState<string>("");
+
+  const [selectedLocationValue, setSelectedLocationValue] =
+    useState<string>("");
+
+  const [selectedSupervisorValue, setSelectedSupervisorValue] =
     useState<string>("");
 
   const { toast } = useToast();
   const { toggleDialog } = useDialogToggle();
 
-  const [date, setDate] = useState<Date>();
+  const [selectedDOBDate, setSelectedDOBDate] = useState<Date | undefined>(
+    undefined
+  );
+  const [selectedDOADate, setSelectedDOADate] = useState<Date | undefined>(
+    undefined
+  );
+  const [selectedDOLPDate, setSelectedDOLPDate] = useState<Date | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     const fetchDepartmentOptions = async () => {
@@ -67,23 +98,6 @@ export function EmployeeForm({ className, tokenData }: UserFormProps) {
     };
 
     fetchDepartmentOptions();
-  }, [tokenData?.token]);
-
-  useEffect(() => {
-    const fetchRoleOptions = async () => {
-      try {
-        const data = await fetchRoles<RoleDataProps>(
-          `${BASE_URL}/role`,
-          tokenData?.token
-        );
-
-        setRoleOptions(data.data);
-      } catch (error) {
-        console.error("Error fetching options:", error);
-      }
-    };
-
-    fetchRoleOptions();
   }, [tokenData?.token]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -176,12 +190,52 @@ export function EmployeeForm({ className, tokenData }: UserFormProps) {
       </div>
 
       <div className="grid gap-2">
-        <Label>Date Of Birth</Label>
-        <DatePicker />
+        <legend className="text-sm font-medium">Date Of Birth</legend>
+        <DatePicker onDateChange={setSelectedDOBDate} />
+      </div>
+
+      <div className="grid gap-2">
+        <legend className="text-sm font-medium">Date Of Appointment</legend>
+        <DatePicker onDateChange={setSelectedDOADate} />
+      </div>
+
+      <div className="grid gap-2">
+        <legend className="text-sm font-medium">Date Of Last Promotion</legend>
+        <DatePicker onDateChange={setSelectedDOLPDate} />
       </div>
 
       <div className="w-full grid gap-2">
-        <Label htmlFor="email">Department</Label>
+        <legend className="text-sm font-medium"> Employee Status</legend>
+        <Select
+          onValueChange={setSelectedEmployeeStatusValue}
+          value={selectedEmployeeStatusValue}
+          name="stateOfEmployee"
+          required
+        >
+          <SelectTrigger className="w-full ring-transparent">
+            <SelectValue placeholder="Select employee status" />
+          </SelectTrigger>
+          <SelectContent className="bg-white">
+            <SelectGroup>
+              <SelectItem
+                className="cursor-pointer hover:bg-secondary hover:text-black"
+                value="ACTIVE"
+              >
+                ACTIVE
+              </SelectItem>
+              <SelectItem
+                className="cursor-pointer hover:bg-secondary hover:text-black"
+                value="INACTIVE"
+              >
+                INACTIVE
+              </SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="w-full grid gap-2">
+        <legend className="text-sm font-medium">Department</legend>
         <Select
           onValueChange={setSelectedDepartmentValue}
           value={selectedDepartmentValue}
@@ -189,13 +243,13 @@ export function EmployeeForm({ className, tokenData }: UserFormProps) {
           required
         >
           <SelectTrigger className="w-full ring-transparent">
-            <SelectValue placeholder="Select a department" />
+            <SelectValue placeholder="Select department" />
           </SelectTrigger>
           <SelectContent className="bg-white">
             <SelectGroup>
               {departmentOptions?.map((option) => (
                 <SelectItem
-                  className="cursor-pointer"
+                  className="cursor-pointer hover:bg-secondary hover:text-black"
                   key={option.id}
                   value={option.id}
                 >
@@ -208,26 +262,111 @@ export function EmployeeForm({ className, tokenData }: UserFormProps) {
       </div>
 
       <div className="w-full grid gap-2">
-        <Label htmlFor="email">Role</Label>
-        <MultiSelector
-          values={selectedRoleValue}
-          onValuesChange={setSelectedRoleValue}
-          loop
-          className="max-w-xs bg-white"
+        <legend className="text-sm font-medium">Designation</legend>
+        <Select
+          onValueChange={setSelectedDesignationValue}
+          value={selectedDesignationValue}
+          name="designationId"
+          required
         >
-          <MultiSelectorTrigger roleOptions={roleOptions}>
-            <MultiSelectorInput placeholder="" />
-          </MultiSelectorTrigger>
-          <MultiSelectorContent className="bg-white">
-            <MultiSelectorList>
-              {roleOptions?.map((option) => (
-                <MultiSelectorItem key={option.id} value={option.id}>
-                  {option.name}
-                </MultiSelectorItem>
+          <SelectTrigger className="w-full ring-transparent">
+            <SelectValue placeholder="Select designation" />
+          </SelectTrigger>
+          <SelectContent className="bg-white">
+            <SelectGroup>
+              {departmentOptions?.map((option) => (
+                <SelectItem
+                  className="cursor-pointer hover:bg-secondary hover:text-black"
+                  key={option.id}
+                  value={option.id}
+                >
+                  {option.departmentName}
+                </SelectItem>
               ))}
-            </MultiSelectorList>
-          </MultiSelectorContent>
-        </MultiSelector>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="w-full grid gap-2">
+        <legend className="text-sm font-medium">Location</legend>
+        <Select
+          onValueChange={setSelectedLocationValue}
+          value={selectedLocationValue}
+          name="locationId"
+          required
+        >
+          <SelectTrigger className="w-full ring-transparent">
+            <SelectValue placeholder="Select location" />
+          </SelectTrigger>
+          <SelectContent className="bg-white">
+            <SelectGroup>
+              {departmentOptions?.map((option) => (
+                <SelectItem
+                  className="cursor-pointer hover:bg-secondary hover:text-black"
+                  key={option.id}
+                  value={option.id}
+                >
+                  {option.departmentName}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="w-full grid gap-2">
+        <legend className="text-sm font-medium">Qualification</legend>
+        <Select
+          onValueChange={setSelectedQualificationValue}
+          value={selectedQualificationValue}
+          name="qualificationId"
+          required
+        >
+          <SelectTrigger className="w-full ring-transparent">
+            <SelectValue placeholder="Select qualification" />
+          </SelectTrigger>
+          <SelectContent className="bg-white">
+            <SelectGroup>
+              {departmentOptions?.map((option) => (
+                <SelectItem
+                  className="cursor-pointer hover:bg-secondary hover:text-black"
+                  key={option.id}
+                  value={option.id}
+                >
+                  {option.departmentName}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="w-full grid gap-2">
+        <legend className="text-sm font-medium">Supervisor</legend>
+        <Select
+          onValueChange={setSelectedSupervisorValue}
+          value={selectedSupervisorValue}
+          name="supervisorId"
+          required
+        >
+          <SelectTrigger className="w-full ring-transparent">
+            <SelectValue placeholder="Select supervisor" />
+          </SelectTrigger>
+          <SelectContent className="bg-white">
+            <SelectGroup>
+              {departmentOptions?.map((option) => (
+                <SelectItem
+                  className="cursor-pointer hover:bg-secondary hover:text-black"
+                  key={option.id}
+                  value={option.id}
+                >
+                  {option.departmentName}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
       </div>
 
       <Button className="text-white" type="submit">

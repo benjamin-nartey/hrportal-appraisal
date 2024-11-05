@@ -1,18 +1,23 @@
 "use client";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import Spinner from "./Spinner";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export default function LoginForm() {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const from =
       new URLSearchParams(window.location.search).get("from") || "/dashboard";
+
+    setLoading(true);
+    setErrorMessage("");
 
     try {
       const formData = new FormData(event.currentTarget);
@@ -55,6 +60,8 @@ export default function LoginForm() {
       router.push(from);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
   return (
@@ -81,10 +88,11 @@ export default function LoginForm() {
         <span className="text-red-500 text-sm">{errorMessage}</span>
       )}
       <button
-        className="bg-secondary font-semibold hover:bg-primary hover:text-white transition-all active:bg-secondary text-black p-2"
+        className="bg-secondary font-semibold hover:bg-primary hover:text-white transition-all active:bg-secondary text-black p-2 flex items-center justify-center gap-4"
         type="submit"
       >
-        Login
+        {loading && <Spinner variant="small" />}
+        {loading ? "Loging..." : "Login"}
       </button>
     </form>
   );

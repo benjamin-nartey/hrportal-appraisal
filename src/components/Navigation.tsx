@@ -43,7 +43,7 @@ export default function Navigation({ userData, children }: NavigationProps) {
         <div className="lg:flex flex-initial h-screen hidden bg-clip-padding backdrop-filter backdrop-blur-md bg-primary">
           <Sidebar />
         </div>
-        <div className="main-content-column bg-[#fff] h-screen w-full overflow-y-auto overflow-x-hidden">
+        <div className="main-content-column bg-[#fff] h-screen w-full overflow-y-auto overflow-x-hidden scrollbar-hide">
           <div className="flex border-l-0 lg:border-l border-l-gray-300 w-full justify-between items-center sticky top-0 z-10 bg-primary text-white">
             <div className="w-full relative h-full p-5">
               <div className="w-full flex justify-between items-center">

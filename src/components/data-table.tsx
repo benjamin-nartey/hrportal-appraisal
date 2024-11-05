@@ -116,7 +116,7 @@ export function DataTable<TData, TValue>({
         {isOpenEditUser && drawalEditComponent}
       </div>
 
-      <div className="rounded-md border">
+      <div className="rounded-md border ">
         <Table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <TableHeader className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 whitespace-nowrap">
             {table.getHeaderGroups().map((headerGroup) => (

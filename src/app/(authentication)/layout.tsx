@@ -5,7 +5,7 @@ import "../../app/globals.css";
 const inter = Quicksand({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "login | COCOBOD Appraisal Sysytem",
+  title: "Login | COCOBOD Appraisal Sysytem",
   description: "COCOBOD Appraisal Sysytem",
   applicationName: "COCOBOD Appraisal Sysytem",
 };

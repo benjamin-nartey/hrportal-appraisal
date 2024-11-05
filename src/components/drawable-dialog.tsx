@@ -45,7 +45,7 @@ export function DrawerDialog({
             {btnTitle}
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px] bg-white ">
+        <DialogContent className="sm:max-w-[425px] bg-white max-h-screen overflow-y-scroll scrollbar-hide">
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
             <DrawerDescription className="text-transparent">
@@ -66,7 +66,7 @@ export function DrawerDialog({
           {btnTitle}
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="bg-white">
+      <DrawerContent className="bg-white max-h-screen overflow-y-scroll scrollbar-hide">
         <DrawerHeader className="text-left">
           <DrawerTitle>{title}</DrawerTitle>
           <DrawerDescription className="text-transparent">

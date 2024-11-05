@@ -16,7 +16,7 @@ export default function About() {
           backgroundPosition: "top",
         }}
       ></div>
-      <div className="max-w-2xl mx-auto p-2 relative">
+      <div className="max-w-2xl mx-auto p-2 relative animate-slide-in">
         <div className="">
           <div className="mb-24">
             <h1 className="text-3xl font-semibold text-center mb-4">About</h1>
