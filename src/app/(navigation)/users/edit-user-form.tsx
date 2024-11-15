@@ -17,6 +17,8 @@ import {
 
 import { useToast } from "@/hooks/use-toast";
 
+import { useRouter } from "next/navigation";
+
 import { fetchDepartments } from "@/lib/fetchDepartments";
 import { fetchRoles } from "@/lib/fetchRoles";
 
@@ -31,6 +33,7 @@ import {
 
 import { useDialogToggle } from "@/store/dialogToggle";
 import { useUserStore } from "@/store/user";
+import Spinner from "@/components/Spinner";
 
 interface UserFormProps extends React.ComponentProps<"form"> {
   tokenData: AccessTokenProps | null;
@@ -50,8 +53,12 @@ export function EditUserForm({ className, tokenData }: UserFormProps) {
   const [selectedDepartmentValue, setSelectedDepartmentValue] =
     useState<string>(user?.department.id || "");
 
+  const [loading, setLoading] = useState(false);
+
   const { toast } = useToast();
   const { toggleDialog } = useDialogToggle();
+
+  const router = useRouter();
 
   useEffect(() => {
     const fetchDepartmentOptions = async () => {
@@ -89,6 +96,7 @@ export function EditUserForm({ className, tokenData }: UserFormProps) {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setLoading(true);
     try {
       const formData = new FormData(event.currentTarget);
 
@@ -96,11 +104,11 @@ export function EditUserForm({ className, tokenData }: UserFormProps) {
         name: formData.get("name") as string,
         email: formData.get("email") as string,
         departmentId: formData.get("departmentId") as string,
-        roleId: selectedRoleValue,
+        roleIds: selectedRoleValue,
       };
 
       const response = await fetch(`${BASE_URL}/user/${user?.id}`, {
-        method: "POST",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${tokenData?.token}`,
@@ -124,6 +132,8 @@ export function EditUserForm({ className, tokenData }: UserFormProps) {
         description: `${data.message}`,
       });
 
+      router.refresh();
+
       toggleDialog.setIsOpenEditUser(false);
     } catch (error: any) {
       toast({
@@ -131,6 +141,8 @@ export function EditUserForm({ className, tokenData }: UserFormProps) {
         title: "Uh oh! Something went wrong.",
         description: `${error}`,
       });
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -214,8 +226,12 @@ export function EditUserForm({ className, tokenData }: UserFormProps) {
         </MultiSelector>
       </div>
 
-      <Button className="text-white" type="submit">
-        Save changes
+      <Button
+        className="text-white flex items-center justify-center gap-4"
+        type="submit"
+      >
+        {loading && <Spinner variant="small" />}
+        {loading ? "Saving..." : "Save changes"}
       </Button>
     </form>
   );

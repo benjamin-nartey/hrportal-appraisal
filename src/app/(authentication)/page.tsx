@@ -15,12 +15,12 @@ export default function Login() {
           }}
           className="flex-1 lg:flex justify-center items-center hidden"
         >
-          <Image
+          <img
             className="translate-x-[5rem]"
             src="/illustration-1.png"
             width={400}
             height={400}
-            alt="metrics"
+            alt="login-hero"
           />
         </div>
         <div className="flex-1 flex justify-center items-center">

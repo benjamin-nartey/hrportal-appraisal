@@ -21,6 +21,10 @@ const config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       keyframes: {
+        rotate: {
+          "0%": { transform: "rotate(0deg) scale(10)" },
+          "100%": { transform: "rotate(-360deg) scale(10)" },
+        },
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -39,6 +43,16 @@ const config = {
             transform: "translateX(0px)",
           },
         },
+        "slide-up": {
+          "0%": {
+            "-webkit-transform": "translateY(200px)",
+            transform: "translateY(200px)",
+          },
+          "100%": {
+            "-webkit-transform": "translateY(0px)",
+            transform: "translateY(0px)",
+          },
+        },
 
         "slide-fwd": {
           "0%": {
@@ -52,9 +66,11 @@ const config = {
         },
       },
       animation: {
+        rotate: "rotate 10s linear infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "slide-in": "slide-in 0.5s ease-out",
+        "slide-up": "slide-up 0.5s ease-out",
         "slide-fwd":
           " slide-fwd 0.45s cubic-bezier(0.250, 0.460, 0.450, 0.940) both",
       },

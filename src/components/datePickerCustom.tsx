@@ -20,6 +20,13 @@ interface DatePickerProps {
 export function DatePicker({ onDateChange }: DatePickerProps) {
   const [date, setDate] = React.useState<Date | undefined>(undefined);
 
+  const handleDateChange = (selectedDate: Date | undefined) => {
+    setDate(selectedDate); // Update local state
+    if (onDateChange) {
+      onDateChange(selectedDate); // Notify parent component if a handler is provided
+    }
+  };
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -38,7 +45,7 @@ export function DatePicker({ onDateChange }: DatePickerProps) {
         <Calendar
           mode="single"
           selected={date}
-          onSelect={setDate}
+          onSelect={handleDateChange}
           initialFocus
         />
       </PopoverContent>

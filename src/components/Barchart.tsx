@@ -21,21 +21,21 @@ import {
 export const description = "A multiple bar chart";
 
 const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
+  { department: "IT", employees: 186, appraiser: 80 },
+  { department: "FINANCE", employees: 305, appraiser: 200 },
+  { department: "ESTATE", employees: 237, appraiser: 120 },
+  { department: "HR", employees: 190, appraiser: 73 },
+  { department: "SPECIAL SERVICE", employees: 209, appraiser: 130 },
+  { department: "RESEARCH", employees: 214, appraiser: 140 },
 ];
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  employees: {
+    label: "Employees",
     color: "hsl(var(--chart-1))",
   },
-  mobile: {
-    label: "Mobile",
+  appraiser: {
+    label: "appraiser",
     color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig;
@@ -52,11 +52,11 @@ export function BarchartComponent() {
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="month"
+              dataKey="department"
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickFormatter={(value) => value}
             />
             <ChartTooltip
               cursor={false}
@@ -67,17 +67,17 @@ export function BarchartComponent() {
                 />
               }
             />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-            <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+            <Bar dataKey="employees" fill="var(--color-employees)" radius={4} />
+            <Bar dataKey="appraiser" fill="var(--color-appraiser)" radius={4} />
           </BarChart>
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+          5.2% Appraiser completed this month <TrendingUp className="h-4 w-4" />
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+          Showing total appraisers for the last 6 months
         </div>
       </CardFooter>
     </Card>

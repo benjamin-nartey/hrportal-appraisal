@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 import { BarchartComponent } from "@/components/Barchart";
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -10,7 +11,7 @@ export default function Dashboard() {
   return (
     <div className="lg:p-12 p-2 flex flex-col items-center justify-center gap-16">
       <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 w-full gap-4 bg-gray-100/40 p-4">
-        <div className="p-2  w-full animate-slide-in">
+        <Link href={`/self-appraisal`} className="p-2  w-full animate-slide-in">
           <div className=" bg-white border-l-[5px] shadow border-l-primary cursor-pointer px-4 py-6 rounded-lg transform transition duration-500 hover:scale-110">
             <svg
               viewBox="0 0 24 24"
@@ -39,8 +40,8 @@ export default function Dashboard() {
             </h2>
             <p className="leading-relaxed font-medium">Self Appraisal</p>
           </div>
-        </div>
-        <div className="p-2  w-full animate-slide-in">
+        </Link>
+        <Link href={`/self-appraisal`} className="p-2  w-full animate-slide-in">
           <div className=" bg-white border-l-[5px] shadow border-l-primary cursor-pointer px-4 py-6 rounded-lg transform transition duration-500 hover:scale-110">
             <svg
               viewBox="0 0 24 24"
@@ -74,8 +75,8 @@ export default function Dashboard() {
             </h2>
             <p className="leading-relaxed font-medium">Completed Appraisals</p>
           </div>
-        </div>
-        <div className="p-2  w-full animate-slide-in">
+        </Link>
+        <Link href={`/self-appraisal`} className="p-2  w-full animate-slide-in">
           <div className=" bg-white border-l-[5px] shadow border-l-primary cursor-pointer px-4 py-6 rounded-lg transform transition duration-500 hover:scale-110">
             <svg
               viewBox="0 0 24 24"
@@ -109,8 +110,8 @@ export default function Dashboard() {
             </h2>
             <p className="leading-relaxed font-medium">Pending HOD</p>
           </div>
-        </div>
-        <div className="p-2  w-full animate-slide-in">
+        </Link>
+        <Link href={`/self-appraisal`} className="p-2  w-full animate-slide-in">
           <div className=" bg-white border-l-[5px] shadow border-l-primary cursor-pointer px-4 py-6 rounded-lg transform transition duration-500 hover:scale-110">
             <svg
               fill="none"
@@ -128,8 +129,8 @@ export default function Dashboard() {
             </h2>
             <p className="leading-relaxed font-medium">Pending Evaluation</p>
           </div>
-        </div>
-        <div className="p-2  w-full animate-slide-in">
+        </Link>
+        <Link href={`/self-appraisal`} className="p-2  w-full animate-slide-in">
           <div className=" bg-white border-l-[5px] shadow border-l-primary cursor-pointer px-4 py-6 rounded-lg transform transition duration-500 hover:scale-110">
             <svg
               viewBox="0 0 24 24"
@@ -162,7 +163,7 @@ export default function Dashboard() {
             </h2>
             <p className="leading-relaxed font-medium">Pending Your Approval</p>
           </div>
-        </div>
+        </Link>
       </div>
 
       <div className="w-full flex justify-center items-center p-4">

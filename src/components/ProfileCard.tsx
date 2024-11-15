@@ -12,7 +12,7 @@ export default function ProfileCard({ userData }: ProfileCardProps) {
   const user = userData?.User;
   return (
     <>
-      <div className=" mx-4 sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto bg-white shadow-xl rounded-lg text-gray-900">
+      <div className=" mx-4 sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto bg-white shadow-xl rounded-lg text-gray-900 animate-slide-up">
         <div className="rounded-t-lg h-32 overflow-hidden bg-gradient-to-b from-primary to-secondary"></div>
         <div className="mx-auto w-32 h-32 relative -mt-16 border-4 border-white rounded-full overflow-hidden">
           <Image

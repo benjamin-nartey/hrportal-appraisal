@@ -13,7 +13,7 @@ export default async function Users() {
   const { usersData, tokenData } = await refreshTokenAndFetchAllUsers();
 
   return (
-    <div className="container mx-auto lg:p-12 p-2">
+    <div className="container mx-auto lg:p-12 p-2 animate-slide-up">
       <UsersPage users={usersData.Users} tokenData={tokenData} />
     </div>
   );

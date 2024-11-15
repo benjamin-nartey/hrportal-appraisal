@@ -21,7 +21,7 @@ export default async function Employees() {
   );
 
   return (
-    <div className="container mx-auto lg:p-12 p-2">
+    <div className="container mx-auto lg:p-12 p-2 animate-slide-up">
       <EmployeesPage
         employees={employeesData.Employees}
         tokenData={tokenData}

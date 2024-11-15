@@ -96,7 +96,7 @@ export function EditEmployeeForm({ className, tokenData }: UserFormProps) {
         name: formData.get("name") as string,
         email: formData.get("email") as string,
         departmentId: formData.get("departmentId") as string,
-        roleId: selectedRoleValue,
+        roleIds: selectedRoleValue,
       };
 
       const response = await fetch(`${BASE_URL}/user/${user?.id}`, {

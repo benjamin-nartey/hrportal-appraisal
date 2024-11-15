@@ -100,11 +100,29 @@ interface UserDataProps {
   role: RoleProps[];
 }
 
+interface CreateAppraisalProps {
+  startDate: Date;
+  endDate: Date;
+}
+
+interface createdAppraisalDataProps {
+  appraisalTimeline: {
+    id: string;
+    divisionId: string;
+    startDate: Date;
+    endDate: Date;
+    appraisalYear: number;
+    createdAt: Date;
+    updatedAt: Date;
+    isActive: boolean;
+  };
+}
+
 interface CreateUserDataProps {
   name: string;
   email: string;
   departmentId: string;
-  roleId: string[];
+  roleIds: string[];
 }
 
 interface CreatedUserResponseProps {
@@ -181,5 +199,9 @@ interface UserPermissions {
 }
 
 interface AccessTokenExpired {
+  error: string;
+}
+
+interface CreateAppraisalErrorProps {
   error: string;
 }
