@@ -105,17 +105,23 @@ interface CreateAppraisalProps {
   endDate: Date;
 }
 
-interface createdAppraisalDataProps {
-  appraisalTimeline: {
-    id: string;
-    divisionId: string;
-    startDate: Date;
-    endDate: Date;
-    appraisalYear: number;
-    createdAt: Date;
-    updatedAt: Date;
-    isActive: boolean;
-  };
+interface AppraisalTimelineProps {
+  id: string;
+  divisionId: string;
+  startDate: Date;
+  endDate: Date;
+  appraisalYear: number;
+  createdAt: Date;
+  updatedAt: Date;
+  isActive: boolean;
+}
+
+interface GetAllAppraisalForDivisionProps {
+  appraisalTimeline: AppraisalTimelineProps[];
+}
+
+interface CreatedAppraisalDataProps {
+  appraisalTimeline: AppraisalTimelineProps;
 }
 
 interface CreateUserDataProps {
@@ -149,12 +155,8 @@ interface TokenProps {
   token: string;
   refreshToken: string;
 }
-interface AccessTokenProps {
-  token: string;
-  refreshToken: string;
-}
 
-interface UserPermissions {
+interface UserPermissionsProps {
   GET_DASHBOARD: string;
   MAKE_COMMENT: string;
   MAKE_HOD_COMMENT: string;
@@ -204,4 +206,20 @@ interface AccessTokenExpired {
 
 interface CreateAppraisalErrorProps {
   error: string;
+}
+
+interface RatingDataProps {
+  id: string;
+  value: string;
+}
+
+type RatingProps = RatingDataProps[];
+
+interface SelfAppraisalProps {
+  name: string;
+  score: number;
+}
+
+interface SelfAppraisalPayloadProps {
+  kpis: SelfAppraisalProps[];
 }

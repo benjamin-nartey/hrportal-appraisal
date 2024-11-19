@@ -33,7 +33,7 @@ import { useDialogToggle } from "@/store/dialogToggle";
 import { useUserStore } from "@/store/user";
 
 interface UserFormProps extends React.ComponentProps<"form"> {
-  tokenData: AccessTokenProps | null;
+  tokenData: TokenProps | null;
 }
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;

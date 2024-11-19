@@ -33,7 +33,7 @@ import {
 import { DatePicker } from "@/components/datePickerCustom";
 
 interface UserFormProps extends React.ComponentProps<"form"> {
-  tokenData: AccessTokenProps | null;
+  tokenData: TokenProps | null;
 }
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;

@@ -1,28 +1,77 @@
 "use client";
-import { cn } from "@/lib/utils";
-import { Slider } from "@/components/ui/slider";
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import Spinner from "@/components/Spinner";
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { RATING } from "../../../lib/const/rating";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { FormEvent } from "react";
 
-type SliderProps = React.ComponentProps<typeof Slider>;
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-export default function SelfAppraislForm({ className, ...props }: SliderProps) {
+interface SelfAppraisalProps {
+  tokenData: TokenProps;
+}
+
+export default function SelfAppraislForm({ tokenData }: SelfAppraisalProps) {
   const [loading, setLoading] = useState(false);
 
-  const [kpiDescription1, setKpiDescription1] = useState("");
-  const [kpiDescription2, setKpiDescription2] = useState("");
-  const [kpiDescription3, setKpiDescription3] = useState("");
-  const [kpiDescription4, setKpiDescription4] = useState("");
-  const [kpiDescription5, setKpiDescription5] = useState("");
+  const [kpiValue1, setKpiValue1] = useState("");
+  const [kpiValue2, setKpiValue2] = useState("");
+  const [kpiValue3, setKpiValue3] = useState("");
+  const [kpiValue4, setKpiValue4] = useState("");
+  const [kpiValue5, setKpiValue5] = useState("");
 
-  const [kpiValue1, setKpiValue1] = useState([0]);
-  const [kpiValue2, setKpiValue2] = useState([0]);
-  const [kpiValue3, setKpiValue3] = useState([0]);
-  const [kpiValue4, setKpiValue4] = useState([0]);
-  const [kpiValue5, setKpiValue5] = useState([0]);
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      const formData = new FormData(event.currentTarget);
+
+      const payload: SelfAppraisalPayloadProps = {
+        kpis: [
+          {
+            name: formData.get("kpiDescription1") as string,
+            score: Number(kpiValue1),
+          },
+          {
+            name: formData.get("kpiDescription2") as string,
+            score: Number(kpiValue2),
+          },
+          {
+            name: formData.get("kpiDescription3") as string,
+            score: Number(kpiValue3),
+          },
+          {
+            name: formData.get("kpiDescription4") as string,
+            score: Number(kpiValue4),
+          },
+          {
+            name: formData.get("kpiDescription5") as string,
+            score: Number(kpiValue5),
+          },
+        ],
+      };
+
+      const response = await fetch(`${BASE_URL}/appraisal`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${tokenData?.token}`,
+        },
+        body: JSON.stringify(payload),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -30,11 +79,10 @@ export default function SelfAppraislForm({ className, ...props }: SliderProps) {
         Evaluation of Key Results Areas(KRA)
       </h2>
       <form
-        action="
-        "
+        onSubmit={handleSubmit}
         className="w-full flex items-center justify-center"
       >
-        <Card className="w-9/12 max-w-full flex flex-col items-center justify-center p-6">
+        <Card className="lg:w-[85%] w-full max-w-full flex flex-col items-center justify-center p-6">
           <div className="flex items-center justify-between w-full mb-6">
             <div className="flex-[0.4]">
               <Input
@@ -47,18 +95,29 @@ export default function SelfAppraislForm({ className, ...props }: SliderProps) {
             </div>
 
             <div className="flex-[0.4] flex gap-4 justify-center items-center">
-              <Slider
-                max={5}
-                step={1}
-                name="kpiValue1"
-                value={kpiValue1}
+              <Select
                 onValueChange={setKpiValue1}
-                className={cn("", className)}
-                {...props}
-              />
-              <div>
-                <Badge className="text-white">{kpiValue1}</Badge>
-              </div>
+                value={kpiValue1}
+                name="departmentId"
+                required
+              >
+                <SelectTrigger className="w-full ring-transparent">
+                  <SelectValue placeholder="Rate yourself out of 5" />
+                </SelectTrigger>
+                <SelectContent className="bg-white">
+                  <SelectGroup>
+                    {RATING?.map((option) => (
+                      <SelectItem
+                        className="cursor-pointer  hover:bg-secondary hover:text-black"
+                        key={option.id}
+                        value={option.value}
+                      >
+                        {option.value}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </div>
           </div>
           <div className="flex items-center justify-between w-full mb-6">
@@ -73,18 +132,29 @@ export default function SelfAppraislForm({ className, ...props }: SliderProps) {
             </div>
 
             <div className="flex-[0.4] flex gap-4 justify-center items-center">
-              <Slider
-                max={5}
-                step={1}
-                name="kpiValue2"
-                value={kpiValue2}
+              <Select
                 onValueChange={setKpiValue2}
-                className={cn("", className)}
-                {...props}
-              />
-              <div>
-                <Badge className="text-white">{kpiValue2}</Badge>
-              </div>
+                value={kpiValue2}
+                name="departmentId"
+                required
+              >
+                <SelectTrigger className="w-full ring-transparent">
+                  <SelectValue placeholder="Rate yourself out of 5" />
+                </SelectTrigger>
+                <SelectContent className="bg-white">
+                  <SelectGroup>
+                    {RATING?.map((option) => (
+                      <SelectItem
+                        className="cursor-pointer  hover:bg-secondary hover:text-black"
+                        key={option.id}
+                        value={option.value}
+                      >
+                        {option.value}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </div>
           </div>
           <div className="flex items-center justify-between w-full mb-6">
@@ -99,18 +169,29 @@ export default function SelfAppraislForm({ className, ...props }: SliderProps) {
             </div>
 
             <div className="flex-[0.4] flex gap-4 justify-center items-center">
-              <Slider
-                max={5}
-                step={1}
-                name="kpiValue3"
-                value={kpiValue3}
+              <Select
                 onValueChange={setKpiValue3}
-                className={cn("", className)}
-                {...props}
-              />
-              <div>
-                <Badge className="text-white">{kpiValue3}</Badge>
-              </div>
+                value={kpiValue3}
+                name="departmentId"
+                required
+              >
+                <SelectTrigger className="w-full ring-transparent">
+                  <SelectValue placeholder="Rate yourself out of 5" />
+                </SelectTrigger>
+                <SelectContent className="bg-white">
+                  <SelectGroup>
+                    {RATING?.map((option) => (
+                      <SelectItem
+                        className="cursor-pointer  hover:bg-secondary hover:text-black"
+                        key={option.id}
+                        value={option.value}
+                      >
+                        {option.value}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </div>
           </div>
           <div className="flex items-center justify-between w-full mb-6">
@@ -125,18 +206,29 @@ export default function SelfAppraislForm({ className, ...props }: SliderProps) {
             </div>
 
             <div className="flex-[0.4] flex gap-4 justify-center items-center">
-              <Slider
-                max={5}
-                step={1}
-                name="kpiValue4"
-                value={kpiValue4}
+              <Select
                 onValueChange={setKpiValue4}
-                className={cn("", className)}
-                {...props}
-              />
-              <div>
-                <Badge className="text-white">{kpiValue4}</Badge>
-              </div>
+                value={kpiValue4}
+                name="departmentId"
+                required
+              >
+                <SelectTrigger className="w-full ring-transparent">
+                  <SelectValue placeholder="Rate yourself out of 5" />
+                </SelectTrigger>
+                <SelectContent className="bg-white">
+                  <SelectGroup>
+                    {RATING?.map((option) => (
+                      <SelectItem
+                        className="cursor-pointer  hover:bg-secondary hover:text-black"
+                        key={option.id}
+                        value={option.value}
+                      >
+                        {option.value}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </div>
           </div>
           <div className="flex items-center justify-between w-full mb-6">
@@ -151,28 +243,39 @@ export default function SelfAppraislForm({ className, ...props }: SliderProps) {
             </div>
 
             <div className="flex-[0.4] flex gap-4 justify-center items-center">
-              <Slider
-                max={5}
-                step={1}
-                name="kpiValue5"
-                value={kpiValue5}
+              <Select
                 onValueChange={setKpiValue5}
-                className={cn("", className)}
-                {...props}
-              />
-              <div>
-                <Badge className="text-white">{kpiValue5}</Badge>
-              </div>
+                value={kpiValue5}
+                name="departmentId"
+                required
+              >
+                <SelectTrigger className="w-full ring-transparent">
+                  <SelectValue placeholder="Rate yourself out of 5" />
+                </SelectTrigger>
+                <SelectContent className="bg-white">
+                  <SelectGroup>
+                    {RATING?.map((option) => (
+                      <SelectItem
+                        className="cursor-pointer  hover:bg-secondary hover:text-black"
+                        key={option.id}
+                        value={option.value}
+                      >
+                        {option.value}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
-          <button
-            className="bg-secondary font-semibold hover:bg-primary hover:text-white transition-all active:bg-secondary text-black p-2 flex items-center justify-center gap-4 w-full"
+          <Button
+            className="font-semibold mt-6 text-white transition-all p-2 flex items-center justify-center gap-4 w-full"
             type="submit"
           >
             {loading && <Spinner variant="small" />}
             {loading ? "Submiting..." : "Submit"}
-          </button>
+          </Button>
         </Card>
       </form>
     </>

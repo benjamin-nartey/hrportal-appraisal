@@ -6,7 +6,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export async function refreshTokenAndFetchAllUsers(): Promise<{
   usersData: UsersProps;
-  tokenData: AccessTokenProps;
+  tokenData: TokenProps;
 }> {
   try {
     const cookieStore = cookies();
@@ -19,7 +19,7 @@ export async function refreshTokenAndFetchAllUsers(): Promise<{
     );
 
     if (usersData?.error === "Not Authorized") {
-      const tokenData = await getNewToken<AccessTokenProps>(
+      const tokenData = await getNewToken<TokenProps>(
         `${BASE_URL}/refresh/${refreshToken}`
       );
       if (!tokenData?.token) {
@@ -34,7 +34,7 @@ export async function refreshTokenAndFetchAllUsers(): Promise<{
       return { usersData, tokenData };
     }
 
-    const tokenData: AccessTokenProps = {
+    const tokenData: TokenProps = {
       token,
       refreshToken,
     };

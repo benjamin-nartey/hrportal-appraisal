@@ -13,7 +13,7 @@ import { useTokenDataStore } from "@/store/tokenData";
 
 interface UsersPageProps {
   users: UserDataProps[];
-  tokenData: AccessTokenProps;
+  tokenData: TokenProps;
 }
 
 export default function UsersPage({ users, tokenData }: UsersPageProps) {

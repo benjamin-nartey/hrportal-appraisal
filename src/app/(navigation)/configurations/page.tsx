@@ -5,8 +5,8 @@ export const metadata: Metadata = {
   title: "Configurations",
 };
 
-import { ConfigTabs } from "./configTab";
 import { refreshTokenAndFetchAllUsers } from "@/lib/refreshTokenAndFetchUsers";
+import { ConfigTabs } from "./configTab";
 
 export default async function Configurations() {
   const { tokenData } = await refreshTokenAndFetchAllUsers();

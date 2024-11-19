@@ -36,7 +36,7 @@ import { useUserStore } from "@/store/user";
 import Spinner from "@/components/Spinner";
 
 interface UserFormProps extends React.ComponentProps<"form"> {
-  tokenData: AccessTokenProps | null;
+  tokenData: TokenProps | null;
 }
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;

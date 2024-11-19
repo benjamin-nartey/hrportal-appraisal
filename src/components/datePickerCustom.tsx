@@ -14,11 +14,16 @@ import {
 } from "@/components/ui/popover";
 
 interface DatePickerProps {
+  value?: Date; // Accept a value prop
   onDateChange?: (date: Date | undefined) => void;
 }
 
-export function DatePicker({ onDateChange }: DatePickerProps) {
-  const [date, setDate] = React.useState<Date | undefined>(undefined);
+export function DatePicker({ value, onDateChange }: DatePickerProps) {
+  const [date, setDate] = React.useState<Date | undefined>(value);
+
+  React.useEffect(() => {
+    setDate(value);
+  }, [value]);
 
   const handleDateChange = (selectedDate: Date | undefined) => {
     setDate(selectedDate); // Update local state

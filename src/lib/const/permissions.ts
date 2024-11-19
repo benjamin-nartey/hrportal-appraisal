@@ -1,4 +1,4 @@
-export const PERMISSIONS: UserPermissions = {
+export const PERMISSIONS: UserPermissionsProps = {
   GET_DASHBOARD: "GET_DASHBOARD",
   MAKE_COMMENT: "MAKE_COMMENT",
   MAKE_HOD_COMMENT: "MAKE_HOD_COMMENT",

@@ -8,10 +8,13 @@ export const metadata: Metadata = {
 import React from "react";
 import SelfAppraislForm from "./self-appraisal-form";
 
-export default function SelfAppraisl() {
+import { refreshTokenAndFetchUser } from "@/lib/refreshTokenAndFetchUser";
+
+export default async function SelfAppraisl() {
+  const { tokenData } = await refreshTokenAndFetchUser();
   return (
     <div className=" flex justify-center items-center flex-col lg:p-12 px-2 py-4 ">
-      <SelfAppraislForm />
+      <SelfAppraislForm tokenData={tokenData} />
     </div>
   );
 }

@@ -6,7 +6,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export async function refreshTokenAndFetchUser(): Promise<{
   userData: UserProps;
-  tokenData: AccessTokenProps;
+  tokenData: TokenProps;
 }> {
   try {
     const cookieStore = cookies();
@@ -16,7 +16,7 @@ export async function refreshTokenAndFetchUser(): Promise<{
     const userData = await fetchUser<UserProps>(`${BASE_URL}/user`, token);
 
     if (userData?.error === "Not Authorized") {
-      const tokenData = await getNewToken<AccessTokenProps>(
+      const tokenData = await getNewToken<TokenProps>(
         `${BASE_URL}/refresh/${refreshToken}`
       );
 
@@ -27,7 +27,7 @@ export async function refreshTokenAndFetchUser(): Promise<{
       return { userData, tokenData };
     }
 
-    const tokenData: AccessTokenProps = {
+    const tokenData: TokenProps = {
       token,
       refreshToken,
     };

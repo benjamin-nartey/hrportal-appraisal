@@ -13,7 +13,7 @@ import { useTokenDataStore } from "@/store/tokenData";
 
 interface EmployeesPageProps {
   employees: EmployeeProps[];
-  tokenData: AccessTokenProps;
+  tokenData: TokenProps;
 }
 
 export default function EmployeesPage({
